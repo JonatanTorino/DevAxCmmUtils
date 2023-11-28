@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxTable xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>DevAxCmmRtsLogMethods</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+public class DevAxCmmRtsLogMethods extends common
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>findNoDue</Name>
+				<Source><![CDATA[
+    public static DevAxCmmRtsLogMethods findNoDue(ClassName _className, MethodName _methodName)
+    {
+        DevAxCmmRtsLogMethods devAxCmmRtsLogMethods;
+
+        select firstonly devAxCmmRtsLogMethods
+            where devAxCmmRtsLogMethods.ClassName == _className
+            && devAxCmmRtsLogMethods.MethodName == _methodName
+            && devAxCmmRtsLogMethods.EndDate >= today()
+        ;
+
+        return devAxCmmRtsLogMethods;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>initInMemoryTableWithRtsMethods</Name>
+				<Source><![CDATA[
+    public static DevAxCmmRtsLogMethods initInMemoryTableWithRtsMethods()
+    {
+        DevAxCmmRtsLogMethods devAxCmmRtsLogMethodsTmp;
+        
+        void fillMethods(ClassId _classId)
+        {
+            SysDictClass dictClass = new SysDictClass(_classId);
+            Set methods = dictClass.methods(false, true, false);
+            SetEnumerator methodsEnumerator = methods.getEnumerator();
+            while (methodsEnumerator.moveNext())
+            {
+                devAxCmmRtsLogMethodsTmp.clear();
+                devAxCmmRtsLogMethodsTmp.ClassName = dictClass.name();
+                SysDictMethod dictMethod = methodsEnumerator.current();
+                devAxCmmRtsLogMethodsTmp.MethodName = dictMethod.name();
+                devAxCmmRtsLogMethodsTmp.insert();
+            }
+        }
+
+        devAxCmmRtsLogMethodsTmp.setTmp();
+
+        fillMethods(classNum(RetailTransactionService));
+        fillMethods(classNum(RetailTransactionServiceEx));
+
+        return devAxCmmRtsLogMethodsTmp;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>lookupClassName</Name>
+				<Source><![CDATA[
+    public static void lookupClassName(FormControl _formControl, str _filterStr)
+    {
+        DevAxCmmRtsLogMethods devAxCmmRtsLogMethodsTmp;
+        devAxCmmRtsLogMethodsTmp.setTmp();
+        devAxCmmRtsLogMethodsTmp.clear();
+        devAxCmmRtsLogMethodsTmp.ClassName = classStr(RetailTransactionService);
+        devAxCmmRtsLogMethodsTmp.insert();
+        devAxCmmRtsLogMethodsTmp.ClassName = classStr(RetailTransactionServiceEx);
+        devAxCmmRtsLogMethodsTmp.insert();
+
+        SysTableLookup sysTableLookup = SysTableLookup::newParameters(tableNum(DevAxCmmRtsLogMethods), _formControl, true);
+        sysTableLookup.addLookupfield(fieldNum(DevAxCmmRtsLogMethods, ClassName), true);
+
+        Query query = new Query();
+        QueryBuildDataSource qbds = query.addDataSource(tableNum(DevAxCmmRtsLogMethods));
+
+        sysTableLookup.parmQuery(query);
+        sysTableLookup.parmTmpBuffer(devAxCmmRtsLogMethodsTmp);
+        sysTableLookup.performFormLookup();
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>lookupMethodName</Name>
+				<Source><![CDATA[
+    public static void lookupMethodName(FormControl _formControl, str _filterStr, str _className)
+    {
+        DevAxCmmRtsLogMethods devAxCmmRtsLogMethodsTmp = DevAxCmmRtsLogMethods::initInMemoryTableWithRtsMethods();
+
+        SysTableLookup sysTableLookup = SysTableLookup::newParameters(tableNum(DevAxCmmRtsLogMethods), _formControl, true);
+        sysTableLookup.addLookupfield(fieldNum(DevAxCmmRtsLogMethods, MethodName), true);
+
+        Query query = new Query();
+        QueryBuildDataSource qbds = query.addDataSource(tableNum(DevAxCmmRtsLogMethods));
+        qbds.addRange(fieldNum(DevAxCmmRtsLogMethods, ClassName)).value(_className);
+        qbds.addSortField(fieldNum(DevAxCmmRtsLogMethods, ClassName));
+        qbds.addSortField(fieldNum(DevAxCmmRtsLogMethods, MethodName));
+
+        sysTableLookup.parmQuery(query);
+        sysTableLookup.parmTmpBuffer(devAxCmmRtsLogMethodsTmp);
+        sysTableLookup.performFormLookup();
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>createMethod</Name>
+				<Source><![CDATA[
+    public static DevAxCmmRtsLogMethods createMethod(ClassName _className, MethodName _methodName, EndDate _endDate)
+    {
+        DevAxCmmRtsLogMethods devAxCmmRtsLogMethods;
+
+        devAxCmmRtsLogMethods.initValue();
+        devAxCmmRtsLogMethods.ClassName = _className;
+        devAxCmmRtsLogMethods.MethodName = _methodName;
+        devAxCmmRtsLogMethods.EndDate = _endDate;
+        devAxCmmRtsLogMethods.LogInput = true;
+        devAxCmmRtsLogMethods.LogOutput = true;
+        devAxCmmRtsLogMethods.insert();
+
+        return devAxCmmRtsLogMethods;
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+	<SubscriberAccessLevel>
+		<Read>Allow</Read>
+	</SubscriberAccessLevel>
+	<CreatedBy>Yes</CreatedBy>
+	<CreatedDateTime>Yes</CreatedDateTime>
+	<ModifiedBy>Yes</ModifiedBy>
+	<ModifiedDateTime>Yes</ModifiedDateTime>
+	<SaveDataPerCompany>No</SaveDataPerCompany>
+	<DeleteActions />
+	<FieldGroups>
+		<AxTableFieldGroup>
+			<Name>AutoReport</Name>
+			<Fields />
+		</AxTableFieldGroup>
+		<AxTableFieldGroup>
+			<Name>AutoLookup</Name>
+			<Fields />
+		</AxTableFieldGroup>
+		<AxTableFieldGroup>
+			<Name>AutoIdentification</Name>
+			<AutoPopulate>Yes</AutoPopulate>
+			<Fields />
+		</AxTableFieldGroup>
+		<AxTableFieldGroup>
+			<Name>AutoSummary</Name>
+			<Fields />
+		</AxTableFieldGroup>
+		<AxTableFieldGroup>
+			<Name>AutoBrowse</Name>
+			<Fields />
+		</AxTableFieldGroup>
+	</FieldGroups>
+	<Fields>
+		<AxTableField xmlns=""
+			i:type="AxTableFieldDate">
+			<Name>EndDate</Name>
+			<ExtendedDataType>EndDate</ExtendedDataType>
+		</AxTableField>
+		<AxTableField xmlns=""
+			i:type="AxTableFieldString">
+			<Name>ClassName</Name>
+			<ExtendedDataType>ClassName</ExtendedDataType>
+		</AxTableField>
+		<AxTableField xmlns=""
+			i:type="AxTableFieldString">
+			<Name>MethodName</Name>
+			<ExtendedDataType>MethodName</ExtendedDataType>
+		</AxTableField>
+		<AxTableField xmlns=""
+			i:type="AxTableFieldEnum">
+			<Name>LogInput</Name>
+			<ExtendedDataType>NoYesId</ExtendedDataType>
+			<EnumType>NoYes</EnumType>
+		</AxTableField>
+		<AxTableField xmlns=""
+			i:type="AxTableFieldEnum">
+			<Name>LogOutput</Name>
+			<ExtendedDataType>NoYesId</ExtendedDataType>
+			<EnumType>NoYes</EnumType>
+		</AxTableField>
+	</Fields>
+	<FullTextIndexes />
+	<Indexes />
+	<Mappings />
+	<Relations />
+	<StateMachines />
+</AxTable>

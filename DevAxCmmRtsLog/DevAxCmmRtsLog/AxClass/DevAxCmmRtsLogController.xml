@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>DevAxCmmRtsLogController</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+public class DevAxCmmRtsLogController
+    implements System.IDisposable
+{
+    DevAxCmmRtsLogParameters devAxCmmRtsLogParameters;
+    DevAxCmmRtsLogMethods logMethod;
+    int fromLine;
+    ClassName className;
+    MethodName methodName;
+    List devAxCmmRtsLogInfologList;
+
+    static DevAxCmmRtsLogController instance;
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>construct</Name>
+				<Source><![CDATA[
+    public static DevAxCmmRtsLogController construct()
+    {
+        return new DevAxCmmRtsLogController();
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>new</Name>
+				<Source><![CDATA[
+    private void new()
+    {
+        if (instance)
+        {
+            throw error(strFmt("Nesting of %1 is not supported", classId2Name(classIdGet(this))));
+        }
+
+        instance = this;
+        devAxCmmRtsLogInfologList = new List(Types::Record);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>dispose</Name>
+				<Source><![CDATA[
+    public void dispose()
+    {
+        instance = null;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>current</Name>
+				<Source><![CDATA[
+    public static DevAxCmmRtsLogController current()
+    {
+        return instance;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>init</Name>
+				<Source><![CDATA[
+    public void init(DevAxCmmRtsLogContract _contract)
+    {
+        fromLine = Global::infologLine();
+        className = _contract.parmClassName();
+        methodName = _contract.parmMethodName();
+        devAxCmmRtsLogParameters = DevAxCmmRtsLogParameters::find();
+
+        if (devAxCmmRtsLogParameters.EnableLog)
+        {
+            logMethod = DevAxCmmRtsLogMethods::findNoDue(_contract.parmClassName(), _contract.parmMethodName());
+
+            if (!logMethod || logMethod.EndDate < today())
+            {
+                if (devAxCmmRtsLogParameters.EnableLogAuto && devAxCmmRtsLogParameters.AutoEndDate >= today())
+                {
+                    logMethod = DevAxCmmRtsLogMethods::createMethod(_contract.parmClassName(), _contract.parmMethodName(), devAxCmmRtsLogParameters.AutoEndDate);
+                }
+            }
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>saveLog</Name>
+				<Source><![CDATA[
+    public void saveLog(DevAxCmmRtsLogContract _contract, RetailTransactionServiceResponse _response)
+    {
+        int fromLineLocal = Global::infologLine();
+        try
+        {
+            List parmListCleaned = this.cleanNulls(_contract.parmList()); //Se reemplazan las nulls por string
+            str parmListJson = FormJsonSerializer::serializeClass(parmListCleaned); //No ademite nulls
+
+            DevAxCmmRtsLogTable devAxCmmRtsLogTable;
+            //Input params
+            devAxCmmRtsLogTable.ClassName = _contract.parmClassName();
+            devAxCmmRtsLogTable.MethodName = _contract.parmMethodName();
+            devAxCmmRtsLogTable.CompanyId = _contract.parmCompanyId();
+            devAxCmmRtsLogTable.RequestParams = parmListJson;
+
+            //Output params
+            devAxCmmRtsLogTable.Infologs = _response.Message();
+            devAxCmmRtsLogTable.ResponseParams = FormJsonSerializer::serializeClass(_response);
+            devAxCmmRtsLogTable.Success = _response.Success();
+
+            devAxCmmRtsLogTable.insert();
+    
+            if (this.devAxCmmRtsLogInfologList.elements() > 0)
+            {
+                this.saveInfologCallStack(devAxCmmRtsLogTable);
+            }
+        }
+        catch
+        {
+            str errorMessage = RetailTransactionServiceUtilities::getInfologMessages(fromLineLocal);
+            error(errorMessage);
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>cleanNulls</Name>
+				<Source><![CDATA[
+    private List cleanNulls(List _parmList)
+    {
+        List ret = new List(Types::AnyType);
+        ListEnumerator parmEnumerator = _parmList.getEnumerator();
+
+        while (parmEnumerator.moveNext())
+        {
+            anytype value = parmEnumerator.current();
+            Types valueType = typeOf(value);
+
+            if (valueType == Types::AnyType && value == null)
+            {
+                value = "";
+            }
+
+            ret.addEnd(value);
+        }
+
+        return ret;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>saveInfologCallStack</Name>
+				<Source><![CDATA[
+    private void saveInfologCallStack(DevAxCmmRtsLogTable _devAxCmmRtsLogTable)
+    {
+        RecordInsertList ril = new RecordInsertList(tableNum(DevAxCmmRtsLogInfolog));
+        ListEnumerator enumerator = devAxCmmRtsLogInfologList.getEnumerator();
+        while (enumerator.moveNext())
+        {
+            DevAxCmmRtsLogInfolog devAxCmmRtsLogInfolog = enumerator.current();
+            devAxCmmRtsLogInfolog.DevAxCmmRtsLogTable = _devAxCmmRtsLogTable.RecId;
+            ril.add(devAxCmmRtsLogInfolog);
+        }
+        ril.insertDatabase();
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>isLogginStatic</Name>
+				<Source><![CDATA[
+    public static boolean isLogginStatic()
+    {
+        if (instance)
+        {
+            //False: sirve para recolectar los infolog/callstack
+            return instance.isLoggin(false);
+        }
+        return false;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>isLoggin</Name>
+				<Source><![CDATA[
+    public boolean isLoggin(boolean _responseSuccess)
+    {
+        if (devAxCmmRtsLogParameters.EnableLog)
+        {
+            boolean isEnableForError = devAxCmmRtsLogParameters.EnableLogOnError && _responseSuccess == false;
+            boolean isEnableForMethod = logMethod.EndDate >= today();
+            
+            if (isEnableForError || isEnableForMethod)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>addInfologCallStack</Name>
+				<Source><![CDATA[
+    public void addInfologCallStack(DevAxCmmRtsLogInfolog _devAxCmmRtsLogInfolog)
+    {
+        devAxCmmRtsLogInfologList.addEnd(_devAxCmmRtsLogInfolog);
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

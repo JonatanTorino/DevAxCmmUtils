@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>DevAxCmmRtsLogContract</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+final class DevAxCmmRtsLogContract
+{
+    ClassName className;
+    MethodName staticMethodName;
+    List params;
+    CompanyId companyId;
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>parmClassName</Name>
+				<Source><![CDATA[
+    public ClassName parmClassName(ClassName _className = className)
+    {
+        className = _className;
+        return className;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>parmMethodName</Name>
+				<Source><![CDATA[
+    public MethodName parmMethodName(MethodName _staticMethodName = staticMethodName)
+    {
+        staticMethodName = _staticMethodName;
+        return staticMethodName;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>parmList</Name>
+				<Source><![CDATA[
+    public List parmList(List _params = params)
+    {
+        params = _params;
+        return params;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>parmCompanyId</Name>
+				<Source><![CDATA[
+    public CompanyId parmCompanyId(CompanyId _companyId = companyId)
+    {
+        companyId = _companyId;
+        return companyId;
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

@@ -1,0 +1,923 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxForm xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="Microsoft.Dynamics.AX.Metadata.V6">
+	<Name>DevAxCmmRtsLog</Name>
+	<SourceCode>
+		<Methods xmlns="">
+			<Method>
+				<Name>classDeclaration</Name>
+				<Source><![CDATA[
+[Form]
+public class DevAxCmmRtsLog extends FormRun
+{
+    DevAxCmmRtsLogMethods devAxCmmRtsLogMethodsTmp;
+
+}
+]]></Source>
+			</Method>
+			<Method>
+				<Name>init</Name>
+				<Source><![CDATA[
+    public void init()
+    {
+        devAxCmmRtsLogMethodsTmp = DevAxCmmRtsLogMethods::initInMemoryTableWithRtsMethods();
+        super();
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>clearLogs</Name>
+				<Source><![CDATA[
+    //TODO +Mover los métodos clearLogs() & deleteRecords() a una clase para implementar SysOperationFramework
+    //Además cambiar el parámetro de entrada de "fecha" a "cantidad de días"
+    //Así se puede dejar programado para borrar registros de forma periódica.
+    public void clearLogs()
+    {
+        Dialog dlg = new Dialog("Borrar hasta la fecha");
+        DialogField dlfToDateTime = dlg.addField(extendedTypeStr(ToDateTime));
+        if (dlg.run())
+        {
+            this.deleteRecords(dlfToDateTime.value());
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>deleteRecords</Name>
+				<Source><![CDATA[
+    protected void deleteRecords(ToDateTime toDateTime)
+    {
+        DevAxCmmRtsLogTable devAxCmmRtsLogTableToClear;
+        DevAxCmmRtsLogInfolog devAxCmmRtsLogInfologToClear;
+
+        ttsbegin;
+        delete_from devAxCmmRtsLogInfologToClear
+                    exists join devAxCmmRtsLogTableToClear
+                    where devAxCmmRtsLogTableToClear.CreatedDateTime <= toDateTime
+                    && devAxCmmRtsLogTableToClear.RecId == devAxCmmRtsLogInfologToClear.DevAxCmmRtsLogTable
+                    ;
+
+        devAxCmmRtsLogTableToClear.skipDeleteActions(true);
+        delete_from devAxCmmRtsLogTableToClear
+                    where devAxCmmRtsLogTableToClear.CreatedDateTime <= toDateTime
+                ;
+        ttscommit;
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+		<DataSources xmlns="">
+			<DataSource>
+				<Name>DevAxCmmRtsLogParameters</Name>
+				<Methods />
+				<Fields>
+					<Field>
+						<DataField>EnableLog</DataField>
+						<Methods>
+							<Method>
+								<Name>modified</Name>
+								<Source><![CDATA[
+            public void modified()
+            {
+                super();
+            }
+
+]]></Source>
+							</Method>
+						</Methods>
+					</Field>
+				</Fields>
+			</DataSource>
+			<DataSource>
+				<Name>DevAxCmmRtsLogMethods</Name>
+				<Methods />
+				<Fields>
+					<Field>
+						<DataField>ClassName</DataField>
+						<Methods>
+							<Method>
+								<Name>lookup</Name>
+								<Source><![CDATA[
+            public void lookup(FormControl _formControl, str _filterStr)
+            {
+                DevAxCmmRtsLogMethods::lookupClassName(_formControl, _filterStr);
+            }
+
+]]></Source>
+							</Method>
+						</Methods>
+					</Field>
+					<Field>
+						<DataField>MethodName</DataField>
+						<Methods>
+							<Method>
+								<Name>lookup</Name>
+								<Source><![CDATA[
+            public void lookup(FormControl _formControl, str _filterStr)
+            {
+                if (DevAxCmmRtsLogMethods.ClassName)
+                {
+                    DevAxCmmRtsLogMethods::lookupMethodName(_formControl, _filterStr, DevAxCmmRtsLogMethods.ClassName);
+                }
+                else
+                {
+                    warning("ClassName is missing");
+                }
+            }
+
+]]></Source>
+							</Method>
+						</Methods>
+					</Field>
+				</Fields>
+			</DataSource>
+		</DataSources>
+		<DataControls xmlns="">
+			<Control>
+				<Name>RtsCustomerOrderLogButton</Name>
+				<Type>Button</Type>
+				<Methods>
+					<Method>
+						<Name>clicked</Name>
+						<Source><![CDATA[
+        public void clicked()
+        {
+            element.clearLogs();
+
+            super();
+        }
+
+]]></Source>
+					</Method>
+				</Methods>
+			</Control>
+		</DataControls>
+		<Members xmlns="" />
+	</SourceCode>
+	<DataSources>
+		<AxFormDataSource xmlns="">
+			<Name>DevAxCmmRtsLogParameters</Name>
+			<Table>DevAxCmmRtsLogParameters</Table>
+			<Fields>
+				<AxFormDataSourceField>
+					<DataField>AutoEndDate</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>EnableLog</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>EnableLogAuto</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>EnableLogOnError</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>Key</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>Partition</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>RecId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>TableId</DataField>
+				</AxFormDataSourceField>
+			</Fields>
+			<ReferencedDataSources />
+			<InsertIfEmpty>No</InsertIfEmpty>
+			<DataSourceLinks />
+			<DerivedDataSources />
+		</AxFormDataSource>
+		<AxFormDataSource xmlns="">
+			<Name>DevAxCmmRtsLogTable</Name>
+			<Table>DevAxCmmRtsLogTable</Table>
+			<Fields>
+				<AxFormDataSourceField>
+					<DataField>ClassName</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>CompanyId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>CreatedDateTime</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>Infologs</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>MethodName</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>Partition</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>RecId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>RequestParams</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>ResponseParams</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>Success</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>TableId</DataField>
+				</AxFormDataSourceField>
+			</Fields>
+			<ReferencedDataSources />
+			<AllowCreate>No</AllowCreate>
+			<AllowEdit>No</AllowEdit>
+			<Index>RecId</Index>
+			<InsertAtEnd>No</InsertAtEnd>
+			<InsertIfEmpty>No</InsertIfEmpty>
+			<StartPosition>Last</StartPosition>
+			<DataSourceLinks />
+			<DerivedDataSources />
+		</AxFormDataSource>
+		<AxFormDataSource xmlns="">
+			<Name>DevAxCmmRtsLogMethods</Name>
+			<Table>DevAxCmmRtsLogMethods</Table>
+			<Fields>
+				<AxFormDataSourceField>
+					<DataField>ClassName</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>CreatedBy</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>CreatedDateTime</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>EndDate</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>LogInput</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>LogOutput</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>MethodName</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>ModifiedBy</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>ModifiedDateTime</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>Partition</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>RecId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>TableId</DataField>
+				</AxFormDataSourceField>
+			</Fields>
+			<ReferencedDataSources />
+			<Index>RecId</Index>
+			<InsertIfEmpty>No</InsertIfEmpty>
+			<StartPosition>Last</StartPosition>
+			<DataSourceLinks />
+			<DerivedDataSources />
+		</AxFormDataSource>
+		<AxFormDataSource xmlns="">
+			<Name>DevAxCmmRtsLogInfolog</Name>
+			<Table>DevAxCmmRtsLogInfolog</Table>
+			<Fields>
+				<AxFormDataSourceField>
+					<DataField>CallStack</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>DataAreaId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>DevAxCmmRtsLogTable</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>ExceptionType</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>Partition</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>RecId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>SysRowVersionNumber</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>TableId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>txt</DataField>
+				</AxFormDataSourceField>
+			</Fields>
+			<ReferencedDataSources />
+			<JoinSource>DevAxCmmRtsLogTable</JoinSource>
+			<AllowCreate>No</AllowCreate>
+			<AllowDelete>No</AllowDelete>
+			<AllowEdit>No</AllowEdit>
+			<InsertIfEmpty>No</InsertIfEmpty>
+			<DataSourceLinks />
+			<DerivedDataSources />
+		</AxFormDataSource>
+	</DataSources>
+	<Design>
+		<Pattern xmlns="">TableOfContents</Pattern>
+		<PatternVersion xmlns="">1.1</PatternVersion>
+		<Style xmlns="">TableOfContents</Style>
+		<Controls xmlns="">
+			<AxFormControl xmlns=""
+				i:type="AxFormTabControl">
+				<Name>MainTab</Name>
+				<Type>Tab</Type>
+				<FormControlExtension
+					i:nil="true" />
+				<Controls>
+					<AxFormControl xmlns=""
+						i:type="AxFormTabPageControl">
+						<Name>ParametersTabPage</Name>
+						<Type>TabPage</Type>
+						<FormControlExtension
+							i:nil="true" />
+						<Controls>
+							<AxFormControl xmlns=""
+								i:type="AxFormGroupControl">
+								<Name>ParametersTittleGroup</Name>
+								<Skip>Yes</Skip>
+								<Type>Group</Type>
+								<WidthMode>SizeToAvailable</WidthMode>
+								<FormControlExtension
+									i:nil="true" />
+								<Controls>
+									<AxFormControl xmlns=""
+										i:type="AxFormStaticTextControl">
+										<Name>ParameterTitleMainText</Name>
+										<Skip>Yes</Skip>
+										<Type>StaticText</Type>
+										<WidthMode>SizeToAvailable</WidthMode>
+										<FormControlExtension
+											i:nil="true" />
+										<Style>MainInstruction</Style>
+										<Text>Parámetros para auditar llamadas al RTS</Text>
+									</AxFormControl>
+									<AxFormControl xmlns=""
+										i:type="AxFormStaticTextControl">
+										<Name>ParameterTitleSecondaryText</Name>
+										<ExtendedStyle>dialog_secondaryInstruction</ExtendedStyle>
+										<Skip>Yes</Skip>
+										<Type>StaticText</Type>
+										<WidthMode>SizeToAvailable</WidthMode>
+										<FormControlExtension
+											i:nil="true" />
+										<Text>Se debe activar por tiempo limitado, ya que dejarlo activado por tiempo indefinido puede tener impacto en el tamaño de la tabla de log</Text>
+									</AxFormControl>
+								</Controls>
+								<AllowUserSetup>No</AllowUserSetup>
+								<FrameType>None</FrameType>
+								<Style>TOCTitleContainer</Style>
+							</AxFormControl>
+							<AxFormControl xmlns=""
+								i:type="AxFormTabControl">
+								<Name>ParametersBodyTab</Name>
+								<Type>Tab</Type>
+								<FormControlExtension
+									i:nil="true" />
+								<Controls>
+									<AxFormControl xmlns=""
+										i:type="AxFormTabPageControl">
+										<Name>ParametersGeneralTabPage</Name>
+										<Pattern>FieldsFieldGroups</Pattern>
+										<PatternVersion>1.1</PatternVersion>
+										<Type>TabPage</Type>
+										<FormControlExtension
+											i:nil="true" />
+										<Controls>
+											<AxFormControl xmlns=""
+												i:type="AxFormCheckBoxControl">
+												<Name>DevAxCmmRtsLogParameters_EnableLog</Name>
+												<Type>CheckBox</Type>
+												<FormControlExtension
+													i:nil="true" />
+												<DataField>EnableLog</DataField>
+												<DataSource>DevAxCmmRtsLogParameters</DataSource>
+											</AxFormControl>
+											<AxFormControl xmlns=""
+												i:type="AxFormCheckBoxControl">
+												<Name>DevAxCmmRtsLogParameters_EnableLogOnError</Name>
+												<Type>CheckBox</Type>
+												<FormControlExtension
+													i:nil="true" />
+												<DataField>EnableLogOnError</DataField>
+												<DataSource>DevAxCmmRtsLogParameters</DataSource>
+											</AxFormControl>
+											<AxFormControl xmlns=""
+												i:type="AxFormGroupControl">
+												<Name>EnableLogAuto</Name>
+												<Type>Group</Type>
+												<FormControlExtension
+													i:nil="true" />
+												<Controls>
+													<AxFormControl xmlns=""
+														i:type="AxFormCheckBoxControl">
+														<Name>DevAxCmmRtsLogParameters_EnableLogAuto</Name>
+														<Type>CheckBox</Type>
+														<FormControlExtension
+															i:nil="true" />
+														<DataField>EnableLogAuto</DataField>
+														<DataSource>DevAxCmmRtsLogParameters</DataSource>
+													</AxFormControl>
+													<AxFormControl xmlns=""
+														i:type="AxFormDateControl">
+														<Name>DevAxCmmRtsLogParameters_AutoEndDate</Name>
+														<Type>Date</Type>
+														<FormControlExtension
+															i:nil="true" />
+														<DataField>AutoEndDate</DataField>
+														<DataSource>DevAxCmmRtsLogParameters</DataSource>
+													</AxFormControl>
+												</Controls>
+												<Caption>Auto enable log</Caption>
+											</AxFormControl>
+										</Controls>
+										<ColumnsMode>Fill</ColumnsMode>
+										<Caption>General</Caption>
+									</AxFormControl>
+									<AxFormControl xmlns=""
+										i:type="AxFormTabPageControl">
+										<Name>ParametersMethodsToLogTabPage</Name>
+										<Pattern>ToolbarList</Pattern>
+										<PatternVersion>1.2</PatternVersion>
+										<Type>TabPage</Type>
+										<FormControlExtension
+											i:nil="true" />
+										<Controls>
+											<AxFormControl xmlns=""
+												i:type="AxFormActionPaneControl">
+												<Name>ParametersMethodsToLogActionPane</Name>
+												<Type>ActionPane</Type>
+												<FormControlExtension
+													i:nil="true" />
+												<Controls>
+													<AxFormControl xmlns=""
+														i:type="AxFormActionPaneTabControl">
+														<Name>ParametersMethodsToLogActionPaneTab</Name>
+														<Type>ActionPaneTab</Type>
+														<FormControlExtension
+															i:nil="true" />
+														<Controls>
+															<AxFormControl xmlns=""
+																i:type="AxFormButtonGroupControl">
+																<Name>ParametersMethodsToLogRecordsButtonGroup</Name>
+																<Type>ButtonGroup</Type>
+																<FormControlExtension
+																	i:nil="true" />
+																<Controls>
+																	<AxFormControl xmlns=""
+																		i:type="AxFormCommandButtonControl">
+																		<Name>ParametersMethodsToLogAddCommand</Name>
+																		<Type>CommandButton</Type>
+																		<FormControlExtension
+																			i:nil="true" />
+																		<AutoRefreshData>Yes</AutoRefreshData>
+																		<Command>New</Command>
+																	</AxFormControl>
+																	<AxFormControl xmlns=""
+																		i:type="AxFormCommandButtonControl">
+																		<Name>ParametersMethodsToLogDeleteCommand</Name>
+																		<Type>CommandButton</Type>
+																		<FormControlExtension
+																			i:nil="true" />
+																		<AutoRefreshData>Yes</AutoRefreshData>
+																		<Command>DeleteRecord</Command>
+																		<MultiSelect>Yes</MultiSelect>
+																	</AxFormControl>
+																</Controls>
+																<DataSource>DevAxCmmRtsLogMethods</DataSource>
+															</AxFormControl>
+														</Controls>
+													</AxFormControl>
+												</Controls>
+												<Style>Strip</Style>
+											</AxFormControl>
+											<AxFormControl xmlns=""
+												i:type="AxFormGridControl">
+												<Name>ParametersMethodsToLogGrid</Name>
+												<Type>Grid</Type>
+												<FormControlExtension
+													i:nil="true" />
+												<Controls>
+													<AxFormControl xmlns=""
+														i:type="AxFormDateControl">
+														<Name>DevAxCmmRtsLogMethods_EndDate</Name>
+														<Type>Date</Type>
+														<FormControlExtension
+															i:nil="true" />
+														<DataField>EndDate</DataField>
+														<DataSource>DevAxCmmRtsLogMethods</DataSource>
+													</AxFormControl>
+													<AxFormControl xmlns=""
+														i:type="AxFormStringControl">
+														<Name>DevAxCmmRtsLogMethods_ClassName</Name>
+														<Type>String</Type>
+														<FormControlExtension
+															i:nil="true" />
+														<DataField>ClassName</DataField>
+														<DataSource>DevAxCmmRtsLogMethods</DataSource>
+													</AxFormControl>
+													<AxFormControl xmlns=""
+														i:type="AxFormStringControl">
+														<Name>DevAxCmmRtsLogMethods_MethodName</Name>
+														<Type>String</Type>
+														<FormControlExtension
+															i:nil="true" />
+														<DataField>MethodName</DataField>
+														<DataSource>DevAxCmmRtsLogMethods</DataSource>
+													</AxFormControl>
+													<AxFormControl xmlns=""
+														i:type="AxFormCheckBoxControl">
+														<Name>DevAxCmmRtsLogMethods_LogInput</Name>
+														<Type>CheckBox</Type>
+														<FormControlExtension
+															i:nil="true" />
+														<DataField>LogInput</DataField>
+														<DataSource>DevAxCmmRtsLogMethods</DataSource>
+													</AxFormControl>
+													<AxFormControl xmlns=""
+														i:type="AxFormCheckBoxControl">
+														<Name>DevAxCmmRtsLogMethods_LogOutput</Name>
+														<Type>CheckBox</Type>
+														<FormControlExtension
+															i:nil="true" />
+														<DataField>LogOutput</DataField>
+														<DataSource>DevAxCmmRtsLogMethods</DataSource>
+													</AxFormControl>
+													<AxFormControl xmlns=""
+														i:type="AxFormStringControl">
+														<Name>DevAxCmmRtsLogMethods_CreatedBy</Name>
+														<Type>String</Type>
+														<FormControlExtension
+															i:nil="true" />
+														<DataField>CreatedBy</DataField>
+														<DataSource>DevAxCmmRtsLogMethods</DataSource>
+													</AxFormControl>
+													<AxFormControl xmlns=""
+														i:type="AxFormDateTimeControl">
+														<Name>DevAxCmmRtsLogMethods_CreatedDateTime</Name>
+														<Type>DateTime</Type>
+														<FormControlExtension
+															i:nil="true" />
+														<DataField>CreatedDateTime</DataField>
+														<DataSource>DevAxCmmRtsLogMethods</DataSource>
+													</AxFormControl>
+													<AxFormControl xmlns=""
+														i:type="AxFormStringControl">
+														<Name>DevAxCmmRtsLogMethods_ModifiedBy</Name>
+														<Type>String</Type>
+														<FormControlExtension
+															i:nil="true" />
+														<DataField>ModifiedBy</DataField>
+														<DataSource>DevAxCmmRtsLogMethods</DataSource>
+													</AxFormControl>
+													<AxFormControl xmlns=""
+														i:type="AxFormDateTimeControl">
+														<Name>DevAxCmmRtsLogMethods_ModifiedDateTime</Name>
+														<Type>DateTime</Type>
+														<FormControlExtension
+															i:nil="true" />
+														<DataField>ModifiedDateTime</DataField>
+														<DataSource>DevAxCmmRtsLogMethods</DataSource>
+													</AxFormControl>
+												</Controls>
+												<DataSource>DevAxCmmRtsLogMethods</DataSource>
+											</AxFormControl>
+										</Controls>
+										<Caption>Methods to log</Caption>
+									</AxFormControl>
+								</Controls>
+								<Style>FastTabs</Style>
+							</AxFormControl>
+						</Controls>
+						<Caption>Parámetros</Caption>
+					</AxFormControl>
+					<AxFormControl xmlns=""
+						i:type="AxFormTabPageControl">
+						<Name>RtsLogRecordTabPage</Name>
+						<Type>TabPage</Type>
+						<FormControlExtension
+							i:nil="true" />
+						<Controls>
+							<AxFormControl xmlns=""
+								i:type="AxFormGroupControl">
+								<Name>RtsLogRecordTitleGroup</Name>
+								<Skip>Yes</Skip>
+								<Type>Group</Type>
+								<WidthMode>SizeToAvailable</WidthMode>
+								<FormControlExtension
+									i:nil="true" />
+								<Controls>
+									<AxFormControl xmlns=""
+										i:type="AxFormStaticTextControl">
+										<Name>RtsLogRecordMainText</Name>
+										<Skip>Yes</Skip>
+										<Type>StaticText</Type>
+										<WidthMode>SizeToAvailable</WidthMode>
+										<FormControlExtension
+											i:nil="true" />
+										<Style>MainInstruction</Style>
+										<Text>Historial de llamadas para creación de presupuestos, de pedidos, y conversión de presupuestos a pedidos</Text>
+									</AxFormControl>
+								</Controls>
+								<AllowUserSetup>No</AllowUserSetup>
+								<FrameType>None</FrameType>
+								<Style>TOCTitleContainer</Style>
+							</AxFormControl>
+							<AxFormControl xmlns=""
+								i:type="AxFormTabControl">
+								<Name>RtsLogRecordTab</Name>
+								<Type>Tab</Type>
+								<FormControlExtension
+									i:nil="true" />
+								<Controls>
+									<AxFormControl xmlns=""
+										i:type="AxFormTabPageControl">
+										<Name>RtsLogRecordTabPageGrid</Name>
+										<Pattern>ToolbarList</Pattern>
+										<PatternVersion>1.2</PatternVersion>
+										<Type>TabPage</Type>
+										<FormControlExtension
+											i:nil="true" />
+										<Controls>
+											<AxFormControl xmlns=""
+												i:type="AxFormActionPaneControl">
+												<Name>RtsLogRecordActionPane</Name>
+												<Type>ActionPane</Type>
+												<FormControlExtension
+													i:nil="true" />
+												<Controls>
+													<AxFormControl xmlns=""
+														i:type="AxFormActionPaneTabControl">
+														<Name>FormActionPaneTabControl1</Name>
+														<Type>ActionPaneTab</Type>
+														<FormControlExtension
+															i:nil="true" />
+														<Controls>
+															<AxFormControl xmlns=""
+																i:type="AxFormButtonGroupControl">
+																<Name>RtsCustomerOrderLogButtonGroup</Name>
+																<Type>ButtonGroup</Type>
+																<FormControlExtension
+																	i:nil="true" />
+																<Controls>
+																	<AxFormControl xmlns=""
+																		i:type="AxFormButtonControl">
+																		<Name>RtsCustomerOrderLogButton</Name>
+																		<Type>Button</Type>
+																		<FormControlExtension
+																			i:nil="true" />
+																		<AutoRefreshData>Yes</AutoRefreshData>
+																		<Text>Limpiar log</Text>
+																	</AxFormControl>
+																	<AxFormControl xmlns=""
+																		i:type="AxFormCommandButtonControl">
+																		<Name>RtsCustomerOrderLogDelete</Name>
+																		<Type>CommandButton</Type>
+																		<FormControlExtension
+																			i:nil="true" />
+																		<Command>DeleteRecord</Command>
+																	</AxFormControl>
+																</Controls>
+																<DataSource>DevAxCmmRtsLogTable</DataSource>
+															</AxFormControl>
+														</Controls>
+													</AxFormControl>
+												</Controls>
+												<Style>Strip</Style>
+											</AxFormControl>
+											<AxFormControl xmlns=""
+												i:type="AxFormGridControl">
+												<Name>RtsLogRecordGrid</Name>
+												<Type>Grid</Type>
+												<FormControlExtension
+													i:nil="true" />
+												<Controls>
+													<AxFormControl xmlns=""
+														i:type="AxFormDateTimeControl">
+														<Name>DevAxCmmRtsLogTable_CreatedDateTime</Name>
+														<Type>DateTime</Type>
+														<FormControlExtension
+															i:nil="true" />
+														<DataField>CreatedDateTime</DataField>
+														<DataSource>DevAxCmmRtsLogTable</DataSource>
+													</AxFormControl>
+													<AxFormControl xmlns=""
+														i:type="AxFormStringControl">
+														<Name>DevAxCmmRtsLogTable_MethodName</Name>
+														<Type>String</Type>
+														<FormControlExtension
+															i:nil="true" />
+														<DataField>MethodName</DataField>
+														<DataSource>DevAxCmmRtsLogTable</DataSource>
+													</AxFormControl>
+													<AxFormControl xmlns=""
+														i:type="AxFormStringControl">
+														<Name>DevAxCmmRtsLogTable_ClassName</Name>
+														<Type>String</Type>
+														<FormControlExtension
+															i:nil="true" />
+														<DataField>ClassName</DataField>
+														<DataSource>DevAxCmmRtsLogTable</DataSource>
+													</AxFormControl>
+													<AxFormControl xmlns=""
+														i:type="AxFormStringControl">
+														<Name>DevAxCmmRtsLogTable_CompanyId</Name>
+														<Type>String</Type>
+														<FormControlExtension
+															i:nil="true" />
+														<DataField>CompanyId</DataField>
+														<DataSource>DevAxCmmRtsLogTable</DataSource>
+													</AxFormControl>
+													<AxFormControl xmlns=""
+														i:type="AxFormCheckBoxControl">
+														<Name>DevAxCmmRtsLogTable_Success</Name>
+														<Type>CheckBox</Type>
+														<FormControlExtension
+															i:nil="true" />
+														<DataField>Success</DataField>
+														<DataSource>DevAxCmmRtsLogTable</DataSource>
+													</AxFormControl>
+												</Controls>
+												<DataSource>DevAxCmmRtsLogTable</DataSource>
+											</AxFormControl>
+										</Controls>
+										<Caption>Logs</Caption>
+									</AxFormControl>
+									<AxFormControl xmlns=""
+										i:type="AxFormTabPageControl">
+										<Name>RtsRequestParamsTabPage</Name>
+										<Pattern>FillText</Pattern>
+										<PatternVersion>UX7 1.0</PatternVersion>
+										<Type>TabPage</Type>
+										<WidthMode>SizeToAvailable</WidthMode>
+										<FormControlExtension
+											i:nil="true" />
+										<Controls>
+											<AxFormControl xmlns=""
+												i:type="AxFormStringControl">
+												<Name>DevAxCmmRtsLogTable_RequestParams</Name>
+												<HeightMode>SizeToAvailable</HeightMode>
+												<Type>String</Type>
+												<WidthMode>SizeToAvailable</WidthMode>
+												<FormControlExtension
+													i:nil="true" />
+												<DataField>RequestParams</DataField>
+												<DataSource>DevAxCmmRtsLogTable</DataSource>
+											</AxFormControl>
+										</Controls>
+										<Caption>Input params</Caption>
+									</AxFormControl>
+									<AxFormControl xmlns=""
+										i:type="AxFormTabPageControl">
+										<Name>RtsResponseParamsTabPage</Name>
+										<Pattern>FillText</Pattern>
+										<PatternVersion>UX7 1.0</PatternVersion>
+										<Type>TabPage</Type>
+										<WidthMode>SizeToAvailable</WidthMode>
+										<FormControlExtension
+											i:nil="true" />
+										<Controls>
+											<AxFormControl xmlns=""
+												i:type="AxFormStringControl">
+												<Name>DevAxCmmRtsLogTable_ResponseParams</Name>
+												<HeightMode>SizeToAvailable</HeightMode>
+												<Type>String</Type>
+												<WidthMode>SizeToAvailable</WidthMode>
+												<FormControlExtension
+													i:nil="true" />
+												<DataField>ResponseParams</DataField>
+												<DataSource>DevAxCmmRtsLogTable</DataSource>
+											</AxFormControl>
+										</Controls>
+										<Caption>Output params</Caption>
+									</AxFormControl>
+									<AxFormControl xmlns=""
+										i:type="AxFormTabPageControl">
+										<Name>RtsInfologsMessagesTabPage</Name>
+										<Pattern>FillText</Pattern>
+										<PatternVersion>UX7 1.0</PatternVersion>
+										<Type>TabPage</Type>
+										<WidthMode>SizeToAvailable</WidthMode>
+										<FormControlExtension
+											i:nil="true" />
+										<Controls>
+											<AxFormControl xmlns=""
+												i:type="AxFormStringControl">
+												<Name>DevAxCmmRtsLogTable_Infologs</Name>
+												<HeightMode>SizeToAvailable</HeightMode>
+												<Type>String</Type>
+												<WidthMode>SizeToAvailable</WidthMode>
+												<FormControlExtension
+													i:nil="true" />
+												<DataField>Infologs</DataField>
+												<DataSource>DevAxCmmRtsLogTable</DataSource>
+											</AxFormControl>
+										</Controls>
+										<Caption>All Infologs together</Caption>
+									</AxFormControl>
+									<AxFormControl xmlns=""
+										i:type="AxFormTabPageControl">
+										<Name>RtsInfologsCallStackTabPage</Name>
+										<Pattern>ToolbarList</Pattern>
+										<PatternVersion>1.2</PatternVersion>
+										<Type>TabPage</Type>
+										<FormControlExtension
+											i:nil="true" />
+										<Controls>
+											<AxFormControl xmlns=""
+												i:type="AxFormGridControl">
+												<Name>DevAxCmmRtsLogInfologGrid</Name>
+												<Type>Grid</Type>
+												<FormControlExtension
+													i:nil="true" />
+												<Controls>
+													<AxFormControl xmlns=""
+														i:type="AxFormComboBoxControl">
+														<Name>DevAxCmmRtsLogInfolog_ExceptionType</Name>
+														<Type>ComboBox</Type>
+														<FormControlExtension
+															i:nil="true" />
+														<DataField>ExceptionType</DataField>
+														<DataSource>DevAxCmmRtsLogInfolog</DataSource>
+														<Items />
+													</AxFormControl>
+													<AxFormControl xmlns=""
+														i:type="AxFormGroupControl">
+														<Name>DevAxCmmRtsLogInfolog_txt_Group</Name>
+														<Pattern>FillText</Pattern>
+														<PatternVersion>UX7 1.0</PatternVersion>
+														<Type>Group</Type>
+														<WidthMode>SizeToAvailable</WidthMode>
+														<FormControlExtension
+															i:nil="true" />
+														<Controls>
+															<AxFormControl xmlns=""
+																i:type="AxFormStringControl">
+																<Name>DevAxCmmRtsLogInfolog_txt</Name>
+																<HeightMode>SizeToAvailable</HeightMode>
+																<Type>String</Type>
+																<WidthMode>SizeToAvailable</WidthMode>
+																<FormControlExtension
+																	i:nil="true" />
+																<DataField>txt</DataField>
+																<DataSource>DevAxCmmRtsLogInfolog</DataSource>
+															</AxFormControl>
+														</Controls>
+													</AxFormControl>
+													<AxFormControl xmlns=""
+														i:type="AxFormGroupControl">
+														<Name>DevAxCmmRtsLogInfolog_CallStack_Group</Name>
+														<Pattern>FillText</Pattern>
+														<PatternVersion>UX7 1.0</PatternVersion>
+														<Type>Group</Type>
+														<WidthMode>SizeToAvailable</WidthMode>
+														<FormControlExtension
+															i:nil="true" />
+														<Controls>
+															<AxFormControl xmlns=""
+																i:type="AxFormStringControl">
+																<Name>DevAxCmmRtsLogInfolog_CallStack</Name>
+																<HeightMode>SizeToAvailable</HeightMode>
+																<Type>String</Type>
+																<WidthMode>SizeToAvailable</WidthMode>
+																<FormControlExtension
+																	i:nil="true" />
+																<DataField>CallStack</DataField>
+																<DataSource>DevAxCmmRtsLogInfolog</DataSource>
+															</AxFormControl>
+														</Controls>
+													</AxFormControl>
+												</Controls>
+											</AxFormControl>
+										</Controls>
+										<Caption>Infologs by call stack</Caption>
+									</AxFormControl>
+								</Controls>
+								<Style>FastTabs</Style>
+							</AxFormControl>
+						</Controls>
+						<Caption>LogTable</Caption>
+					</AxFormControl>
+				</Controls>
+				<Style>VerticalTabs</Style>
+			</AxFormControl>
+		</Controls>
+	</Design>
+	<Parts />
+</AxForm>

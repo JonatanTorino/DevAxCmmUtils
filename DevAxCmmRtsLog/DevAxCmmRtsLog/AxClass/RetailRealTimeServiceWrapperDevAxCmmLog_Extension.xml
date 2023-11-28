@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>RetailRealTimeServiceWrapperDevAxCmmLog_Extension</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+[ExtensionOf(classstr(RetailRealTimeServiceWrapper))]
+final class RetailRealTimeServiceWrapperDevAxCmmLog_Extension
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>MakeStaticCall</Name>
+				<Source><![CDATA[
+    public static RetailTransactionServiceResponse MakeStaticCall(str _className, str _staticMethodName, List _params, str _company, str _language)
+    {
+        RetailTransactionServiceResponse ret;
+        
+        DevAxCmmRtsLogContract contract = new DevAxCmmRtsLogContract();
+        contract.parmCompanyId(_company);
+        contract.parmClassName(_className);
+        contract.parmMethodName(_staticMethodName);
+        contract.parmList(_params);
+
+        using (DevAxCmmRtsLogController controller = DevAxCmmRtsLogController::construct())
+        {
+            controller.init(contract);
+
+            ret = next MakeStaticCall(_className, _staticMethodName, _params, _company, _language);
+
+            if (controller.isLoggin(ret.Success()))
+            {
+                controller.saveLog(contract, ret);
+            }
+        }
+
+        return ret;
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

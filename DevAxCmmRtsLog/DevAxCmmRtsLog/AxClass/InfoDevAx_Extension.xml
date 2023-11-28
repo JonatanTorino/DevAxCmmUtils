@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>InfoDevAx_Extension</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+[ExtensionOf(classstr(Info))]
+final class InfoDevAx_Extension
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>add</Name>
+				<Source><![CDATA[
+    public Exception add(Exception _exception, str _txt, str _helpUrl, Object _sysInfoAction, boolean buildprefix, str _label)
+    {
+        Exception ret = next add(_exception, _txt, _helpUrl, _sysInfoAction, buildprefix, _label);
+
+        if (DevAxCmmRtsLogController::current() && DevAxCmmRtsLogController::isLogginStatic())
+        {
+            container callStackCon = xSession::xppCallStack();
+            str callStackStr = "Publisher;Model;LineNum;MethodName";
+            callStackStr += "\n";
+            for (int i = conLen(callStackCon); conLen(callStackCon) >= 4; i--)
+            {
+                str methodNameStr;
+                str lineNumStr;
+                str modelNameStr;
+                str publisherStr;
+                [methodNameStr, lineNumStr, publisherStr, modelNameStr] = callStackCon;
+                callStackStr += strFmt("%1;%2;%3;%4", publisherStr, modelNameStr, lineNumStr, methodNameStr);
+                callStackStr += "\n";
+                callStackCon = conDel(callStackCon, 1, 4);
+            }
+            DevAxCmmRtsLogInfolog devAxCmmRtsLogInfolog;
+            devAxCmmRtsLogInfolog.ExceptionType = _exception;
+            devAxCmmRtsLogInfolog.txt = _txt;
+            devAxCmmRtsLogInfolog.CallStack = callStackStr;
+            DevAxCmmRtsLogController::current().addInfologCallStack(devAxCmmRtsLogInfolog);
+        }
+
+        return ret;
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>
