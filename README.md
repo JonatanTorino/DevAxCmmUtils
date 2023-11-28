@@ -12,21 +12,20 @@ $repositoryUrl = "https://github.com/JonatanTorino/DevAxCmmRtsLog"
 $localPath = "K:\Axxon\GitHub.JonatanTorino\DevAxCmmRtsLog"
 
 # Clone the repository
-git clone $repositoryUrl $localPath
+git clone $repositoryUrl $localPath | Wait-Process
 
 # Task 2: Create a symbolic link
-$targetPath = "K:\Axxon\GitHub.JonatanTorino\DevAxCmmRtsLog"
+$targetPath = "K:\Axxon\GitHub.JonatanTorino\DevAxCmmRtsLog\DevAxCmmRtsLog"
 $linkPath = "K:\AosService\PackagesLocalDirectory\DevAxCmmRtsLog"
 
-# Remove existing directory if it exists
+Write-Host 'Remove existing directory if it exists'
 Remove-Item -Path $linkPath -Recurse -Force -ErrorAction SilentlyContinue
 
-# Create a symbolic link
+Write-Host 'Create a symbolic link'
 New-Item -ItemType SymbolicLink -Path $linkPath -Target $targetPath
 
-# Set the prompt location to the symbolic link path
-Set-Location -Path $linkPath
-
-# Execute the D365 module compile command
+# Task 3: Compile the model
+Write-Host 'Executing the D365 module compile command'
 Invoke-D365ModuleFullCompile -Module DevAxCmmRtsLog
+
 ```
