@@ -36,8 +36,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Classes\" />
+    <Folder Include="Data Entities\" />
     <Folder Include="Display Menu Items\" />
     <Folder Include="Forms\" />
+    <Folder Include="Security Privileges\" />
     <Folder Include="Tables\" />
   </ItemGroup>
   <ItemGroup>
@@ -61,6 +63,11 @@
       <Name>RetailRealTimeServiceWrapperDevAxCmmLog_Extension</Name>
       <Link>Classes\RetailRealTimeServiceWrapperDevAxCmmLog_Extension</Link>
     </Content>
+    <Content Include="AxDataEntityView\DevAxCmmRtsLogTableEntity">
+      <SubType>Content</SubType>
+      <Name>DevAxCmmRtsLogTableEntity</Name>
+      <Link>Data Entities\DevAxCmmRtsLogTableEntity</Link>
+    </Content>
     <Content Include="AxForm\DevAxCmmRtsLog">
       <SubType>Content</SubType>
       <Name>DevAxCmmRtsLog</Name>
@@ -70,6 +77,16 @@
       <SubType>Content</SubType>
       <Name>DevAxCmmRtsLog</Name>
       <Link>Display Menu Items\DevAxCmmRtsLog</Link>
+    </Content>
+    <Content Include="AxSecurityPrivilege\DevAxCmmRtsLogTableEntityMaintain">
+      <SubType>Content</SubType>
+      <Name>DevAxCmmRtsLogTableEntityMaintain</Name>
+      <Link>Security Privileges\DevAxCmmRtsLogTableEntityMaintain</Link>
+    </Content>
+    <Content Include="AxSecurityPrivilege\DevAxCmmRtsLogTableEntityView">
+      <SubType>Content</SubType>
+      <Name>DevAxCmmRtsLogTableEntityView</Name>
+      <Link>Security Privileges\DevAxCmmRtsLogTableEntityView</Link>
     </Content>
     <Content Include="AxTable\DevAxCmmRtsLogInfolog">
       <SubType>Content</SubType>
@@ -90,6 +107,11 @@
       <SubType>Content</SubType>
       <Name>DevAxCmmRtsLogTable</Name>
       <Link>Tables\DevAxCmmRtsLogTable</Link>
+    </Content>
+    <Content Include="AxTable\DevAxCmmRtsLogTableStaging">
+      <SubType>Content</SubType>
+      <Name>DevAxCmmRtsLogTableStaging</Name>
+      <Link>Tables\DevAxCmmRtsLogTableStaging</Link>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.Common.targets" />
