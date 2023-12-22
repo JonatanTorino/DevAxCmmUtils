@@ -399,4 +399,4 @@ FodyWeavers.xsd
 
 #Exclude compiled files and folders
 /DevAxCmmRtsLog/XppMetadata/DevAxCmmRtsLog
-/DevAxCmmRtsLog/BuildModelResult.xml
+/DevAxCmmRtsLog/*
