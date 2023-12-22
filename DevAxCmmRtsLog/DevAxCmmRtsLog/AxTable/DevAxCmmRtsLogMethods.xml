@@ -118,8 +118,7 @@ public class DevAxCmmRtsLogMethods extends common
         devAxCmmRtsLogMethods.ClassName = _className;
         devAxCmmRtsLogMethods.MethodName = _methodName;
         devAxCmmRtsLogMethods.EndDate = _endDate;
-        devAxCmmRtsLogMethods.LogInput = true;
-        devAxCmmRtsLogMethods.LogOutput = true;
+        devAxCmmRtsLogMethods.LogLevel = DevAxCmmRtsLogLevel::All;
         devAxCmmRtsLogMethods.insert();
 
         return devAxCmmRtsLogMethods;
@@ -179,15 +178,8 @@ public class DevAxCmmRtsLogMethods extends common
 		</AxTableField>
 		<AxTableField xmlns=""
 			i:type="AxTableFieldEnum">
-			<Name>LogInput</Name>
-			<ExtendedDataType>NoYesId</ExtendedDataType>
-			<EnumType>NoYes</EnumType>
-		</AxTableField>
-		<AxTableField xmlns=""
-			i:type="AxTableFieldEnum">
-			<Name>LogOutput</Name>
-			<ExtendedDataType>NoYesId</ExtendedDataType>
-			<EnumType>NoYes</EnumType>
+			<Name>LogLevel</Name>
+			<EnumType>DevAxCmmRtsLogLevel</EnumType>
 		</AxTableField>
 	</Fields>
 	<FullTextIndexes />

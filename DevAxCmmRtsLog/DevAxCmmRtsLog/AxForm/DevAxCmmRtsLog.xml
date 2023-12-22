@@ -256,10 +256,7 @@ public class DevAxCmmRtsLog extends FormRun
 					<DataField>EndDate</DataField>
 				</AxFormDataSourceField>
 				<AxFormDataSourceField>
-					<DataField>LogInput</DataField>
-				</AxFormDataSourceField>
-				<AxFormDataSourceField>
-					<DataField>LogOutput</DataField>
+					<DataField>LogLevel</DataField>
 				</AxFormDataSourceField>
 				<AxFormDataSourceField>
 					<DataField>MethodName</DataField>
@@ -281,7 +278,6 @@ public class DevAxCmmRtsLog extends FormRun
 				</AxFormDataSourceField>
 			</Fields>
 			<ReferencedDataSources />
-			<Index>RecId</Index>
 			<InsertIfEmpty>No</InsertIfEmpty>
 			<StartPosition>Last</StartPosition>
 			<DataSourceLinks />
@@ -486,7 +482,6 @@ public class DevAxCmmRtsLog extends FormRun
 																		<Type>CommandButton</Type>
 																		<FormControlExtension
 																			i:nil="true" />
-																		<AutoRefreshData>Yes</AutoRefreshData>
 																		<Command>New</Command>
 																	</AxFormControl>
 																	<AxFormControl xmlns=""
@@ -542,22 +537,14 @@ public class DevAxCmmRtsLog extends FormRun
 														<DataSource>DevAxCmmRtsLogMethods</DataSource>
 													</AxFormControl>
 													<AxFormControl xmlns=""
-														i:type="AxFormCheckBoxControl">
-														<Name>DevAxCmmRtsLogMethods_LogInput</Name>
-														<Type>CheckBox</Type>
+														i:type="AxFormComboBoxControl">
+														<Name>DevAxCmmRtsLogMethods_LogLevel</Name>
+														<Type>ComboBox</Type>
 														<FormControlExtension
 															i:nil="true" />
-														<DataField>LogInput</DataField>
+														<DataField>LogLevel</DataField>
 														<DataSource>DevAxCmmRtsLogMethods</DataSource>
-													</AxFormControl>
-													<AxFormControl xmlns=""
-														i:type="AxFormCheckBoxControl">
-														<Name>DevAxCmmRtsLogMethods_LogOutput</Name>
-														<Type>CheckBox</Type>
-														<FormControlExtension
-															i:nil="true" />
-														<DataField>LogOutput</DataField>
-														<DataSource>DevAxCmmRtsLogMethods</DataSource>
+														<Items />
 													</AxFormControl>
 													<AxFormControl xmlns=""
 														i:type="AxFormStringControl">
@@ -904,6 +891,7 @@ public class DevAxCmmRtsLog extends FormRun
 														</Controls>
 													</AxFormControl>
 												</Controls>
+												<DataSource>DevAxCmmRtsLogInfolog</DataSource>
 											</AxFormControl>
 										</Controls>
 										<Caption>Infologs by call stack</Caption>

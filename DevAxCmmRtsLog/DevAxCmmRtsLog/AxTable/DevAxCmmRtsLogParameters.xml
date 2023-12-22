@@ -27,6 +27,7 @@ public class DevAxCmmRtsLogParameters extends common
 		<Read>Allow</Read>
 	</SubscriberAccessLevel>
 	<TableGroup>Parameter</TableGroup>
+	<PrimaryIndex>KeyIdx</PrimaryIndex>
 	<SaveDataPerCompany>No</SaveDataPerCompany>
 	<DeleteActions />
 	<FieldGroups>

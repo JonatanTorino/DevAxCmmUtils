@@ -16,7 +16,8 @@ git clone $repositoryUrl $localPath | Wait-Process
 
 # Task 2: Create a symbolic link
 $targetPath = "K:\Axxon\GitHub.JonatanTorino\DevAxCmmRtsLog\DevAxCmmRtsLog"
-$linkPath = "K:\AosService\PackagesLocalDirectory\DevAxCmmRtsLog"
+$modelName = "DevAxCmmRtsLog"
+$linkPath = "K:\AosService\PackagesLocalDirectory\"+$modelName
 
 Write-Host 'Remove existing directory if it exists'
 Remove-Item -Path $linkPath -Recurse -Force -ErrorAction SilentlyContinue
@@ -26,6 +27,6 @@ New-Item -ItemType SymbolicLink -Path $linkPath -Target $targetPath
 
 # Task 3: Compile the model
 Write-Host 'Executing the D365 module compile command'
-Invoke-D365ModuleFullCompile -Module DevAxCmmRtsLog
+Invoke-D365ModuleFullCompile -Module $modelName
 
 ```
