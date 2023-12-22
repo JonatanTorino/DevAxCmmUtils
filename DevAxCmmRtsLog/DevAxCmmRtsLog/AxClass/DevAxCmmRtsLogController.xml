@@ -195,8 +195,9 @@ public class DevAxCmmRtsLogController
     {
         if (devAxCmmRtsLogParameters.EnableLog)
         {
-            boolean isEnableForError = devAxCmmRtsLogParameters.EnableLogOnError && _responseSuccess == false;
-            boolean isEnableForMethod = logMethod.EndDate >= today();
+            boolean isEnableForError = devAxCmmRtsLogParameters.EnableLogOnError || logMethod.LogLevel == DevAxCmmRtsLogLevel::Error;
+            isEnableForError = isEnableForError && _responseSuccess == false;
+            boolean isEnableForMethod = logMethod.LogLevel != DevAxCmmRtsLogLevel::None && logMethod.EndDate >= today();
             
             if (isEnableForError || isEnableForMethod)
             {
