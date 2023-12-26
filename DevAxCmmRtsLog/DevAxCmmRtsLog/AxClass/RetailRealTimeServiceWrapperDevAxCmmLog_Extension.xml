@@ -26,7 +26,9 @@ final class RetailRealTimeServiceWrapperDevAxCmmLog_Extension
         {
             controller.init(contract);
 
+            contract.startWatch();
             ret = next MakeStaticCall(_className, _staticMethodName, _params, _company, _language);
+            contract.stopWatch();
 
             if (controller.isLoggin(ret.Success()))
             {

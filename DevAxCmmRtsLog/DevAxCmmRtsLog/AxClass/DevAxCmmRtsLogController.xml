@@ -113,6 +113,7 @@ public class DevAxCmmRtsLogController
             devAxCmmRtsLogTable.ResponseParams = FormJsonSerializer::serializeClass(_response);
             devAxCmmRtsLogTable.Success = _response.Success();
 
+            devAxCmmRtsLogTable.ElapsedMilliseconds = _contract.getElapsedMilliseconds();
             devAxCmmRtsLogTable.insert();
     
             if (this.devAxCmmRtsLogInfologList.elements() > 0)

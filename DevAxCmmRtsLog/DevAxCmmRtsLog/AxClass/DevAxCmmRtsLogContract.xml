@@ -9,6 +9,9 @@ final class DevAxCmmRtsLogContract
     MethodName staticMethodName;
     List params;
     CompanyId companyId;
+    int64 elapsedMilliseconds;
+    
+    System.Diagnostics.Stopwatch stopwatch;
 
 }
 ]]></Declaration>
@@ -53,6 +56,38 @@ final class DevAxCmmRtsLogContract
     {
         companyId = _companyId;
         return companyId;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>getElapsedMilliseconds</Name>
+				<Source><![CDATA[
+    public int64 getElapsedMilliseconds()
+    {
+        return elapsedMilliseconds;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>startWatch</Name>
+				<Source><![CDATA[
+    public void startWatch()
+    {
+        stopwatch = new System.Diagnostics.Stopwatch();
+        stopwatch.Start();
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>stopWatch</Name>
+				<Source><![CDATA[
+    public int64 stopWatch()
+    {
+        elapsedMilliseconds = stopwatch.get_ElapsedMilliseconds();
+        return elapsedMilliseconds;
     }
 
 ]]></Source>
