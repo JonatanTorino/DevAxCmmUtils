@@ -205,6 +205,9 @@ public class DevAxCmmRtsLog extends FormRun
 					<DataField>CreatedDateTime</DataField>
 				</AxFormDataSourceField>
 				<AxFormDataSourceField>
+					<DataField>ElapsedMilliseconds</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
 					<DataField>Infologs</DataField>
 				</AxFormDataSourceField>
 				<AxFormDataSourceField>
@@ -738,6 +741,15 @@ public class DevAxCmmRtsLog extends FormRun
 														<FormControlExtension
 															i:nil="true" />
 														<DataField>Success</DataField>
+														<DataSource>DevAxCmmRtsLogTable</DataSource>
+													</AxFormControl>
+													<AxFormControl xmlns=""
+														i:type="AxFormInt64Control">
+														<Name>DevAxCmmRtsLogTable_ElapsedMilliseconds</Name>
+														<Type>Int64</Type>
+														<FormControlExtension
+															i:nil="true" />
+														<DataField>ElapsedMilliseconds</DataField>
 														<DataSource>DevAxCmmRtsLogTable</DataSource>
 													</AxFormControl>
 												</Controls>

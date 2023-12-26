@@ -88,6 +88,10 @@ public class DevAxCmmRtsLogTable extends common
 			<ExtendedDataType>NoYesId</ExtendedDataType>
 			<EnumType>NoYes</EnumType>
 		</AxTableField>
+		<AxTableField xmlns=""
+			i:type="AxTableFieldInt64">
+			<Name>ElapsedMilliseconds</Name>
+		</AxTableField>
 	</Fields>
 	<FullTextIndexes />
 	<Indexes>
