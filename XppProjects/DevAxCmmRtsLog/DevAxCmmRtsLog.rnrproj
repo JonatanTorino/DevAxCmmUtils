@@ -59,6 +59,11 @@
       <Name>DevAxCmmRtsLogUpdateDateDialog</Name>
       <Link>Classes\DevAxCmmRtsLogUpdateDateDialog</Link>
     </Content>
+    <Content Include="AxClass\DevAxCmmRtsLogUpdateLogLevelDialog">
+      <SubType>Content</SubType>
+      <Name>DevAxCmmRtsLogUpdateLogLevelDialog</Name>
+      <Link>Classes\DevAxCmmRtsLogUpdateLogLevelDialog</Link>
+    </Content>
     <Content Include="AxClass\InfoDevAx_Extension">
       <SubType>Content</SubType>
       <Name>InfoDevAx_Extension</Name>

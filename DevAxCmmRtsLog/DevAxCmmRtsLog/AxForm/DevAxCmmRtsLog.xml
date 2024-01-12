@@ -156,6 +156,29 @@ public class DevAxCmmRtsLog extends FormRun
 				</Methods>
 			</Control>
 			<Control>
+				<Name>ParametersMethodsToLogUpdateLogLevel</Name>
+				<Type>Button</Type>
+				<Methods>
+					<Method>
+						<Name>clicked</Name>
+						<Source><![CDATA[
+        /// <summary>
+        ///
+        /// </summary>
+        public void clicked()
+        {
+            DevAxCmmRtsLogUpdateLogLevelDialog dialog = new DevAxCmmRtsLogUpdateLogLevelDialog();
+            dialog.setDevAxCmmRtsLogMethods_ds(DevAxCmmRtsLogMethods_ds);
+            dialog.run();
+
+            super();
+        }
+
+]]></Source>
+					</Method>
+				</Methods>
+			</Control>
+			<Control>
 				<Name>RtsCustomerOrderLogButton</Name>
 				<Type>Button</Type>
 				<Methods>
@@ -526,6 +549,16 @@ public class DevAxCmmRtsLog extends FormRun
 																		<AutoRefreshData>Yes</AutoRefreshData>
 																		<MultiSelect>Yes</MultiSelect>
 																		<Text>Update end date</Text>
+																	</AxFormControl>
+																	<AxFormControl xmlns=""
+																		i:type="AxFormButtonControl">
+																		<Name>ParametersMethodsToLogUpdateLogLevel</Name>
+																		<Type>Button</Type>
+																		<FormControlExtension
+																			i:nil="true" />
+																		<AutoRefreshData>Yes</AutoRefreshData>
+																		<MultiSelect>Yes</MultiSelect>
+																		<Text>Update log level</Text>
 																	</AxFormControl>
 																</Controls>
 																<DataSource>DevAxCmmRtsLogMethods</DataSource>
