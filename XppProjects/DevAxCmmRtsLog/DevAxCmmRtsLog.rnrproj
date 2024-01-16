@@ -54,6 +54,16 @@
       <Name>DevAxCmmRtsLogController</Name>
       <Link>Classes\DevAxCmmRtsLogController</Link>
     </Content>
+    <Content Include="AxClass\DevAxCmmRtsLogUpdateDateDialog">
+      <SubType>Content</SubType>
+      <Name>DevAxCmmRtsLogUpdateDateDialog</Name>
+      <Link>Classes\DevAxCmmRtsLogUpdateDateDialog</Link>
+    </Content>
+    <Content Include="AxClass\DevAxCmmRtsLogUpdateLogLevelDialog">
+      <SubType>Content</SubType>
+      <Name>DevAxCmmRtsLogUpdateLogLevelDialog</Name>
+      <Link>Classes\DevAxCmmRtsLogUpdateLogLevelDialog</Link>
+    </Content>
     <Content Include="AxClass\InfoDevAx_Extension">
       <SubType>Content</SubType>
       <Name>InfoDevAx_Extension</Name>
