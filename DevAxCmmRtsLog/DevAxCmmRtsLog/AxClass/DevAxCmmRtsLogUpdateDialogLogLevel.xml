@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>DevAxCmmRtsLogUpdateDialogLogLevel</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+public class DevAxCmmRtsLogUpdateDialogLogLevel extends DevAxCmmRtsLogUpdateDialogBase
+{
+    DialogField dfDevAxCmmRtsLogLevel;
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>addFields</Name>
+				<Source><![CDATA[
+    protected void addFields(Dialog _dialog)
+    {
+        dfDevAxCmmRtsLogLevel = _dialog.addField(enumStr(DevAxCmmRtsLogLevel));
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>updateSpecificField</Name>
+				<Source><![CDATA[
+    protected void updateSpecificField(DevAxCmmRtsLogMethods _devAxCmmRtsLogMethods)
+    {
+        _devAxCmmRtsLogMethods.LogLevel = dfDevAxCmmRtsLogLevel.value();
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

@@ -144,7 +144,8 @@ public class DevAxCmmRtsLog extends FormRun
 						<Source><![CDATA[
         public void clicked()
         {
-            DevAxCmmRtsLogUpdateDateDialog dialog = new DevAxCmmRtsLogUpdateDateDialog();
+            //DevAxCmmRtsLogUpdateDateDialog dialog = new DevAxCmmRtsLogUpdateDateDialog();
+            DevAxCmmRtsLogUpdateDialogEndDate Dialog = new DevAxCmmRtsLogUpdateDialogEndDate();
             dialog.setDevAxCmmRtsLogMethods_ds(DevAxCmmRtsLogMethods_ds);
             dialog.run();
 
@@ -167,7 +168,7 @@ public class DevAxCmmRtsLog extends FormRun
         /// </summary>
         public void clicked()
         {
-            DevAxCmmRtsLogUpdateLogLevelDialog dialog = new DevAxCmmRtsLogUpdateLogLevelDialog();
+            DevAxCmmRtsLogUpdateDialogLogLevel dialog = new DevAxCmmRtsLogUpdateDialogLogLevel();
             dialog.setDevAxCmmRtsLogMethods_ds(DevAxCmmRtsLogMethods_ds);
             dialog.run();
 

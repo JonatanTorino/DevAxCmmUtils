@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>DevAxCmmRtsLogUpdateDialogBase</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+public abstract class DevAxCmmRtsLogUpdateDialogBase extends RunBase
+{
+    FormDataSource devAxCmmRtsLogMethods_ds;
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>dialog</Name>
+				<Source><![CDATA[
+    public Object dialog()
+    {
+        Dialog dialog = super();
+        this.addFields(dialog);
+        return dialog;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>addFields</Name>
+				<Source><![CDATA[
+    protected abstract void addFields(Dialog _dialog)
+    {
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>setDevAxCmmRtsLogMethods_ds</Name>
+				<Source><![CDATA[
+    public void setDevAxCmmRtsLogMethods_ds(FormDataSource _devAxCmmRtsLogMethods_ds)
+    {
+        devAxCmmRtsLogMethods_ds = _devAxCmmRtsLogMethods_ds;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>run</Name>
+				<Source><![CDATA[
+    public void run()
+    {
+        this.dialog();
+        if (this.prompt())
+        {
+            this.updateFieldsDevAxCmmRtsLogMethods();
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>updateFieldsDevAxCmmRtsLogMethods</Name>
+				<Source><![CDATA[
+    public void updateFieldsDevAxCmmRtsLogMethods()
+    {
+        ttsbegin;
+        for(DevAxCmmRtsLogMethods devAxCmmRtsLogMethods = devAxCmmRtsLogMethods_ds.getFirst(true) ? devAxCmmRtsLogMethods_ds.getFirst(true) : devAxCmmRtsLogMethods_ds.cursor(); devAxCmmRtsLogMethods; devAxCmmRtsLogMethods = devAxCmmRtsLogMethods_ds.getNext())
+        {
+            devAxCmmRtsLogMethods.selectForUpdate(true);
+            this.updateSpecificField(devAxCmmRtsLogMethods);
+            devAxCmmRtsLogMethods.update();
+        }
+        ttscommit;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>updateSpecificField</Name>
+				<Source><![CDATA[
+    protected abstract void updateSpecificField(DevAxCmmRtsLogMethods _devAxCmmRtsLogMethods)
+    {
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>
