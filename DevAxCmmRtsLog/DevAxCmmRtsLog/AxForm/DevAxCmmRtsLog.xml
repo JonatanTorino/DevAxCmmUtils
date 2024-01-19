@@ -136,6 +136,50 @@ public class DevAxCmmRtsLog extends FormRun
 		</DataSources>
 		<DataControls xmlns="">
 			<Control>
+				<Name>ParametersMethodsToLogUpdateDate</Name>
+				<Type>Button</Type>
+				<Methods>
+					<Method>
+						<Name>clicked</Name>
+						<Source><![CDATA[
+        public void clicked()
+        {
+            //DevAxCmmRtsLogUpdateDateDialog dialog = new DevAxCmmRtsLogUpdateDateDialog();
+            DevAxCmmRtsLogUpdateDialogEndDate Dialog = new DevAxCmmRtsLogUpdateDialogEndDate();
+            dialog.setDevAxCmmRtsLogMethods_ds(DevAxCmmRtsLogMethods_ds);
+            dialog.run();
+
+            super();
+        }
+
+]]></Source>
+					</Method>
+				</Methods>
+			</Control>
+			<Control>
+				<Name>ParametersMethodsToLogUpdateLogLevel</Name>
+				<Type>Button</Type>
+				<Methods>
+					<Method>
+						<Name>clicked</Name>
+						<Source><![CDATA[
+        /// <summary>
+        ///
+        /// </summary>
+        public void clicked()
+        {
+            DevAxCmmRtsLogUpdateDialogLogLevel dialog = new DevAxCmmRtsLogUpdateDialogLogLevel();
+            dialog.setDevAxCmmRtsLogMethods_ds(DevAxCmmRtsLogMethods_ds);
+            dialog.run();
+
+            super();
+        }
+
+]]></Source>
+					</Method>
+				</Methods>
+			</Control>
+			<Control>
 				<Name>RtsCustomerOrderLogButton</Name>
 				<Type>Button</Type>
 				<Methods>
@@ -496,6 +540,26 @@ public class DevAxCmmRtsLog extends FormRun
 																		<AutoRefreshData>Yes</AutoRefreshData>
 																		<Command>DeleteRecord</Command>
 																		<MultiSelect>Yes</MultiSelect>
+																	</AxFormControl>
+																	<AxFormControl xmlns=""
+																		i:type="AxFormButtonControl">
+																		<Name>ParametersMethodsToLogUpdateDate</Name>
+																		<Type>Button</Type>
+																		<FormControlExtension
+																			i:nil="true" />
+																		<AutoRefreshData>Yes</AutoRefreshData>
+																		<MultiSelect>Yes</MultiSelect>
+																		<Text>Update end date</Text>
+																	</AxFormControl>
+																	<AxFormControl xmlns=""
+																		i:type="AxFormButtonControl">
+																		<Name>ParametersMethodsToLogUpdateLogLevel</Name>
+																		<Type>Button</Type>
+																		<FormControlExtension
+																			i:nil="true" />
+																		<AutoRefreshData>Yes</AutoRefreshData>
+																		<MultiSelect>Yes</MultiSelect>
+																		<Text>Update log level</Text>
 																	</AxFormControl>
 																</Controls>
 																<DataSource>DevAxCmmRtsLogMethods</DataSource>
