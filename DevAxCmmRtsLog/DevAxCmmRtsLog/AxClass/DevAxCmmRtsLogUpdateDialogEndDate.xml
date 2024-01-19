@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>DevAxCmmRtsLogUpdateDialogEndDate</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+public class DevAxCmmRtsLogUpdateDialogEndDate extends DevAxCmmRtsLogUpdateDialogBase
+{
+    DialogField dfEndDate;
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>addFields</Name>
+				<Source><![CDATA[
+    protected void addFields(Dialog _dialog)
+    {
+        dfEndDate = _dialog.addField(extendedTypeStr(EndDate));
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>updateSpecificField</Name>
+				<Source><![CDATA[
+    protected void updateSpecificField(DevAxCmmRtsLogMethods _devAxCmmRtsLogMethods)
+    {
+        if(dfEndDate.value())
+        {
+            _devAxCmmRtsLogMethods.EndDate = dfEndDate.value();
+        }
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>
