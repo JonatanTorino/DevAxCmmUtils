@@ -11,6 +11,24 @@ public class DevAxCmmRtsLogUpdateDialogLogLevel extends DevAxCmmRtsLogUpdateDial
 ]]></Declaration>
 		<Methods>
 			<Method>
+				<Name>main</Name>
+				<Source><![CDATA[
+    public static void main (Args _args)
+    {
+        DevAxCmmRtsLogUpdateDialogLogLevel dialog = new DevAxCmmRtsLogUpdateDialogLogLevel();
+        //FormDataSource fds = _args.record().dataSource();
+        if(_args.record() && _args.record().TableId == tableNum(DevAxCmmRtsLogMethods))
+        {
+            FormDataSource logMethods = _args.record().dataSource();
+            dialog.setDevAxCmmRtsLogMethods_ds(logMethods);
+            dialog.run();
+        }
+        
+    }
+
+]]></Source>
+			</Method>
+			<Method>
 				<Name>addFields</Name>
 				<Source><![CDATA[
     protected void addFields(Dialog _dialog)
