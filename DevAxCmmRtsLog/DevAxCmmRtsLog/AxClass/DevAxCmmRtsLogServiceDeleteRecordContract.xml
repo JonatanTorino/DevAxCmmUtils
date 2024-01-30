@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>DevAxCmmRtsLogServiceDeleteRecordContract</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+[DataContractAttribute]
+[SysOperationAlwaysInitializeAttribute]
+class DevAxCmmRtsLogServiceDeleteRecordContract implements SysOperationInitializable
+{
+    int retentionDays;
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>parmRetentionDays</Name>
+				<Source><![CDATA[
+    [DataMember,
+    SysOperationLabel(literalStr("Retention days")),
+    SysOperationHelpText(literalStr("Data older than the retention days will be cleaned up")),
+    SysOperationDisplayOrder('1')]
+
+public int parmRetentionDays(int _retentionDays = retentionDays)
+    {
+        retentionDays = _retentionDays;
+
+        return retentionDays;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>initialize</Name>
+				<Source><![CDATA[
+    public void initialize()
+    {
+        retentionDays = 30;
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

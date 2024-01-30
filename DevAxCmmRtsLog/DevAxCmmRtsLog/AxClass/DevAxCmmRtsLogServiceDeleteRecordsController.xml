@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>DevAxCmmRtsLogServiceDeleteRecordsController</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+class DevAxCmmRtsLogServiceDeleteRecordsController extends SysOperationServiceController
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>new</Name>
+				<Source><![CDATA[
+    protected void new()
+    {
+        super(classStr(DevAxCmmRtsLogServiceDeleteRecords), methodStr(DevAxCmmRtsLogServiceDeleteRecords, process), SysOperationExecutionMode::Synchronous);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>construct</Name>
+				<Source><![CDATA[
+    public static DevAxCmmRtsLogServiceDeleteRecordsController construct()
+    {
+        DevAxCmmRtsLogServiceDeleteRecordsController controller;
+        controller = new DevAxCmmRtsLogServiceDeleteRecordsController();
+        controller.parmShowDialog(true);
+        controller.parmShowProgressForm(false);
+
+        return controller;
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

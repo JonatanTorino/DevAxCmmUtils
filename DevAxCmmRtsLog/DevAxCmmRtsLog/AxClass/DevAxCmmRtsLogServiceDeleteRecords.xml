@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>DevAxCmmRtsLogServiceDeleteRecords</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+class DevAxCmmRtsLogServiceDeleteRecords extends SysOperationServiceBase
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>process</Name>
+				<Source><![CDATA[
+    public void process(DevAxCmmRtsLogServiceDeleteRecordContract _contract)
+    {
+        int retentionDays = _contract.parmRetentionDays();
+        utcdatetime retentionDateTime;
+        retentionDateTime = DateTimeUtil::addDays(DateTimeUtil::getSystemDateTime(), -retentionDays);
+
+        Info(strFmt("Retention days: %1", retentionDays));
+        Info(strFmt("Retention date/time: %1", retentionDateTime));
+
+        DevAxCmmRtsLogTable devAxCmmRtsLogTable;
+        this.deleteRecords(retentionDateTime);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>deleteRecords</Name>
+				<Source><![CDATA[
+    protected void deleteRecords(utcdatetime toDateTime)
+    {
+        DevAxCmmRtsLogTable devAxCmmRtsLogTableToClear;
+        DevAxCmmRtsLogInfolog devAxCmmRtsLogInfologToClear;
+
+        ttsbegin;
+        delete_from devAxCmmRtsLogInfologToClear
+                    exists join devAxCmmRtsLogTableToClear
+                    where devAxCmmRtsLogTableToClear.CreatedDateTime <= toDateTime
+                    && devAxCmmRtsLogTableToClear.RecId == devAxCmmRtsLogInfologToClear.DevAxCmmRtsLogTable
+                    ;
+
+        devAxCmmRtsLogTableToClear.skipDeleteActions(true);
+        delete_from devAxCmmRtsLogTableToClear
+                    where devAxCmmRtsLogTableToClear.CreatedDateTime <= toDateTime
+                ;
+        ttscommit;
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

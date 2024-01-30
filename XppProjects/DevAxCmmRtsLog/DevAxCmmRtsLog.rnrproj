@@ -35,10 +35,12 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="Action Menu Items\" />
     <Folder Include="Base Enums\" />
     <Folder Include="Classes\" />
     <Folder Include="Data Entities\" />
     <Folder Include="Display Menu Items\" />
+    <Folder Include="EDT Enums\" />
     <Folder Include="Forms\" />
     <Folder Include="Security Privileges\" />
     <Folder Include="Tables\" />
@@ -53,6 +55,21 @@
       <SubType>Content</SubType>
       <Name>DevAxCmmRtsLogController</Name>
       <Link>Classes\DevAxCmmRtsLogController</Link>
+    </Content>
+    <Content Include="AxClass\DevAxCmmRtsLogServiceDeleteRecordContract">
+      <SubType>Content</SubType>
+      <Name>DevAxCmmRtsLogServiceDeleteRecordContract</Name>
+      <Link>Classes\DevAxCmmRtsLogServiceDeleteRecordContract</Link>
+    </Content>
+    <Content Include="AxClass\DevAxCmmRtsLogServiceDeleteRecords">
+      <SubType>Content</SubType>
+      <Name>DevAxCmmRtsLogServiceDeleteRecords</Name>
+      <Link>Classes\DevAxCmmRtsLogServiceDeleteRecords</Link>
+    </Content>
+    <Content Include="AxClass\DevAxCmmRtsLogServiceDeleteRecordsController">
+      <SubType>Content</SubType>
+      <Name>DevAxCmmRtsLogServiceDeleteRecordsController</Name>
+      <Link>Classes\DevAxCmmRtsLogServiceDeleteRecordsController</Link>
     </Content>
     <Content Include="AxClass\DevAxCmmRtsLogUpdateDialogBase">
       <SubType>Content</SubType>
@@ -89,10 +106,30 @@
       <Name>DevAxCmmRtsLogLevel</Name>
       <Link>Base Enums\DevAxCmmRtsLogLevel</Link>
     </Content>
+    <Content Include="AxEnum\DevAxCmmRtsLogUpdateDialog">
+      <SubType>Content</SubType>
+      <Name>DevAxCmmRtsLogUpdateDialog</Name>
+      <Link>Base Enums\DevAxCmmRtsLogUpdateDialog</Link>
+    </Content>
     <Content Include="AxForm\DevAxCmmRtsLog">
       <SubType>Content</SubType>
       <Name>DevAxCmmRtsLog</Name>
       <Link>Forms\DevAxCmmRtsLog</Link>
+    </Content>
+    <Content Include="AxMenuItemAction\DevAxCmmRtsLogServiceDeleteRecords">
+      <SubType>Content</SubType>
+      <Name>DevAxCmmRtsLogServiceDeleteRecords</Name>
+      <Link>Action Menu Items\DevAxCmmRtsLogServiceDeleteRecords</Link>
+    </Content>
+    <Content Include="AxMenuItemAction\DevAxCmmRtsLogUpdateDialogEndDate">
+      <SubType>Content</SubType>
+      <Name>DevAxCmmRtsLogUpdateDialogEndDate</Name>
+      <Link>Action Menu Items\DevAxCmmRtsLogUpdateDialogEndDate</Link>
+    </Content>
+    <Content Include="AxMenuItemAction\DevAxCmmRtsLogUpdateDialogLogLevel">
+      <SubType>Content</SubType>
+      <Name>DevAxCmmRtsLogUpdateDialogLogLevel</Name>
+      <Link>Action Menu Items\DevAxCmmRtsLogUpdateDialogLogLevel</Link>
     </Content>
     <Content Include="AxMenuItemDisplay\DevAxCmmRtsLog">
       <SubType>Content</SubType>

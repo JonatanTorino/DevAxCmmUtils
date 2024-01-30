@@ -7,9 +7,24 @@ public class DevAxCmmRtsLogUpdateDialogEndDate extends DevAxCmmRtsLogUpdateDialo
 {
     DialogField dfEndDate;
 
+    
 }
 ]]></Declaration>
 		<Methods>
+			<Method>
+				<Name>main</Name>
+				<Source><![CDATA[
+    public static void main(Args _args)
+    {
+        DevAxCmmRtsLogUpdateDialogEndDate Dialog = new DevAxCmmRtsLogUpdateDialogEndDate();
+        FormDataSource fds = _args.record().dataSource();
+
+        dialog.setDevAxCmmRtsLogMethods_ds(fds);
+        dialog.run();
+    }
+
+]]></Source>
+			</Method>
 			<Method>
 				<Name>addFields</Name>
 				<Source><![CDATA[

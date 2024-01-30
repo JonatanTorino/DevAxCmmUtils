@@ -11,6 +11,9 @@ public class DevAxCmmRtsLog extends FormRun
 {
     DevAxCmmRtsLogMethods devAxCmmRtsLogMethodsTmp;
 
+
+
+
 }
 ]]></Source>
 			</Method>
@@ -21,48 +24,6 @@ public class DevAxCmmRtsLog extends FormRun
     {
         devAxCmmRtsLogMethodsTmp = DevAxCmmRtsLogMethods::initInMemoryTableWithRtsMethods();
         super();
-    }
-
-]]></Source>
-			</Method>
-			<Method>
-				<Name>clearLogs</Name>
-				<Source><![CDATA[
-    //TODO +Mover los métodos clearLogs() & deleteRecords() a una clase para implementar SysOperationFramework
-    //Además cambiar el parámetro de entrada de "fecha" a "cantidad de días"
-    //Así se puede dejar programado para borrar registros de forma periódica.
-    public void clearLogs()
-    {
-        Dialog dlg = new Dialog("Borrar hasta la fecha");
-        DialogField dlfToDateTime = dlg.addField(extendedTypeStr(ToDateTime));
-        if (dlg.run())
-        {
-            this.deleteRecords(dlfToDateTime.value());
-        }
-    }
-
-]]></Source>
-			</Method>
-			<Method>
-				<Name>deleteRecords</Name>
-				<Source><![CDATA[
-    protected void deleteRecords(ToDateTime toDateTime)
-    {
-        DevAxCmmRtsLogTable devAxCmmRtsLogTableToClear;
-        DevAxCmmRtsLogInfolog devAxCmmRtsLogInfologToClear;
-
-        ttsbegin;
-        delete_from devAxCmmRtsLogInfologToClear
-                    exists join devAxCmmRtsLogTableToClear
-                    where devAxCmmRtsLogTableToClear.CreatedDateTime <= toDateTime
-                    && devAxCmmRtsLogTableToClear.RecId == devAxCmmRtsLogInfologToClear.DevAxCmmRtsLogTable
-                    ;
-
-        devAxCmmRtsLogTableToClear.skipDeleteActions(true);
-        delete_from devAxCmmRtsLogTableToClear
-                    where devAxCmmRtsLogTableToClear.CreatedDateTime <= toDateTime
-                ;
-        ttscommit;
     }
 
 ]]></Source>
@@ -134,70 +95,7 @@ public class DevAxCmmRtsLog extends FormRun
 				</Fields>
 			</DataSource>
 		</DataSources>
-		<DataControls xmlns="">
-			<Control>
-				<Name>ParametersMethodsToLogUpdateDate</Name>
-				<Type>Button</Type>
-				<Methods>
-					<Method>
-						<Name>clicked</Name>
-						<Source><![CDATA[
-        public void clicked()
-        {
-            //DevAxCmmRtsLogUpdateDateDialog dialog = new DevAxCmmRtsLogUpdateDateDialog();
-            DevAxCmmRtsLogUpdateDialogEndDate Dialog = new DevAxCmmRtsLogUpdateDialogEndDate();
-            dialog.setDevAxCmmRtsLogMethods_ds(DevAxCmmRtsLogMethods_ds);
-            dialog.run();
-
-            super();
-        }
-
-]]></Source>
-					</Method>
-				</Methods>
-			</Control>
-			<Control>
-				<Name>ParametersMethodsToLogUpdateLogLevel</Name>
-				<Type>Button</Type>
-				<Methods>
-					<Method>
-						<Name>clicked</Name>
-						<Source><![CDATA[
-        /// <summary>
-        ///
-        /// </summary>
-        public void clicked()
-        {
-            DevAxCmmRtsLogUpdateDialogLogLevel dialog = new DevAxCmmRtsLogUpdateDialogLogLevel();
-            dialog.setDevAxCmmRtsLogMethods_ds(DevAxCmmRtsLogMethods_ds);
-            dialog.run();
-
-            super();
-        }
-
-]]></Source>
-					</Method>
-				</Methods>
-			</Control>
-			<Control>
-				<Name>RtsCustomerOrderLogButton</Name>
-				<Type>Button</Type>
-				<Methods>
-					<Method>
-						<Name>clicked</Name>
-						<Source><![CDATA[
-        public void clicked()
-        {
-            element.clearLogs();
-
-            super();
-        }
-
-]]></Source>
-					</Method>
-				</Methods>
-			</Control>
-		</DataControls>
+		<DataControls xmlns="" />
 		<Members xmlns="" />
 	</SourceCode>
 	<DataSources>
@@ -542,22 +440,26 @@ public class DevAxCmmRtsLog extends FormRun
 																		<MultiSelect>Yes</MultiSelect>
 																	</AxFormControl>
 																	<AxFormControl xmlns=""
-																		i:type="AxFormButtonControl">
-																		<Name>ParametersMethodsToLogUpdateDate</Name>
-																		<Type>Button</Type>
+																		i:type="AxFormMenuFunctionButtonControl">
+																		<Name>DevAxCmmRtsLogUpdateDialogEndDate</Name>
+																		<Type>MenuFunctionButton</Type>
 																		<FormControlExtension
 																			i:nil="true" />
 																		<AutoRefreshData>Yes</AutoRefreshData>
+																		<MenuItemName>DevAxCmmRtsLogUpdateDialogEndDate</MenuItemName>
+																		<MenuItemType>Action</MenuItemType>
 																		<MultiSelect>Yes</MultiSelect>
 																		<Text>Update end date</Text>
 																	</AxFormControl>
 																	<AxFormControl xmlns=""
-																		i:type="AxFormButtonControl">
-																		<Name>ParametersMethodsToLogUpdateLogLevel</Name>
-																		<Type>Button</Type>
+																		i:type="AxFormMenuFunctionButtonControl">
+																		<Name>DevAxCmmRtsLogUpdateDialogLogLevel</Name>
+																		<Type>MenuFunctionButton</Type>
 																		<FormControlExtension
 																			i:nil="true" />
 																		<AutoRefreshData>Yes</AutoRefreshData>
+																		<MenuItemName>DevAxCmmRtsLogUpdateDialogLogLevel</MenuItemName>
+																		<MenuItemType>Action</MenuItemType>
 																		<MultiSelect>Yes</MultiSelect>
 																		<Text>Update log level</Text>
 																	</AxFormControl>
@@ -731,13 +633,14 @@ public class DevAxCmmRtsLog extends FormRun
 																	i:nil="true" />
 																<Controls>
 																	<AxFormControl xmlns=""
-																		i:type="AxFormButtonControl">
-																		<Name>RtsCustomerOrderLogButton</Name>
-																		<Type>Button</Type>
+																		i:type="AxFormMenuFunctionButtonControl">
+																		<Name>DevAxCmmRtsLogServiceDeleteRecords</Name>
+																		<Type>MenuFunctionButton</Type>
 																		<FormControlExtension
 																			i:nil="true" />
 																		<AutoRefreshData>Yes</AutoRefreshData>
-																		<Text>Limpiar log</Text>
+																		<MenuItemName>DevAxCmmRtsLogServiceDeleteRecords</MenuItemName>
+																		<MenuItemType>Action</MenuItemType>
 																	</AxFormControl>
 																	<AxFormControl xmlns=""
 																		i:type="AxFormCommandButtonControl">
