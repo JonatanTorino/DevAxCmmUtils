@@ -12,7 +12,7 @@
     <RunAppCheckerRules>False</RunAppCheckerRules>
     <LogAppcheckerDiagsAsErrors>False</LogAppcheckerDiagsAsErrors>
     <ProjectGuid>{4ee37123-4724-4b0c-98f7-e482bd32f8b0}</ProjectGuid>
-    <Name>DevAxCmmRtsLog</Name>
+    <Name>DevAxCmmUtils</Name>
     <RootNamespace>DevAxCmmRtsLog</RootNamespace>
     <SccProjectName>SAK</SccProjectName>
     <SccProvider>SAK</SccProvider>

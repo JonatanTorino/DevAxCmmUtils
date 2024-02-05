@@ -58,7 +58,6 @@ public class DevAxCmmRtsLogDialog extends FormRun
         public void executeQuery()
         {
             QueryBuildDataSource  queryBuildDataSource;
- 
             queryBuildDataSource = this.query().dataSourceTable(tablenum(DevAxCmmRtsLogMethods));
             queryBuildDataSource.clearRanges();
             queryBuildDataSource.addRange(fieldnum(DevAxCmmRtsLogMethods, ClassName)).value(queryValue(ClassNameCtrl.text()));

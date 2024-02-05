@@ -34,6 +34,7 @@ class DevAxCmmRtsLogServiceDeleteRecords extends SysOperationServiceBase
         DevAxCmmRtsLogTable devAxCmmRtsLogTableToClear;
         DevAxCmmRtsLogInfolog devAxCmmRtsLogInfologToClear;
 
+
         ttsbegin;
         delete_from devAxCmmRtsLogInfologToClear
                     exists join devAxCmmRtsLogTableToClear
