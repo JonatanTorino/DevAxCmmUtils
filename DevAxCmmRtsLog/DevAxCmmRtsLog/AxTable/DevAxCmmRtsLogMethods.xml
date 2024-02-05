@@ -68,6 +68,7 @@ public class DevAxCmmRtsLogMethods extends common
         devAxCmmRtsLogMethodsTmp.clear();
         devAxCmmRtsLogMethodsTmp.ClassName = classStr(RetailTransactionService);
         devAxCmmRtsLogMethodsTmp.insert();
+        devAxCmmRtsLogMethodsTmp.clear();
         devAxCmmRtsLogMethodsTmp.ClassName = classStr(RetailTransactionServiceEx);
         devAxCmmRtsLogMethodsTmp.insert();
 
