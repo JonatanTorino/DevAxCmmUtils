@@ -8,9 +8,9 @@ Tool for log request and response between, RTS and RetailServer
 Copy and past
 ```powershell
 # Task 1: Clone the repository
-$repositoryUrl = "https://github.com/JonatanTorino/DevAxCmmRtsLog"
-$localPath = "K:\Axxon\GitHub.JonatanTorino\DevAxCmmRtsLog"
-$modelName = "DevAxCmmRtsLog"
+$repositoryUrl = "https://github.com/JonatanTorino/DevAxCmmUtils"
+$localPath = "K:\Axxon\GitHub.JonatanTorino\DevAxCmmUtils"
+$modelName = "DevAxCmmUtils"
 
 # Clone or pull the repository
 try {
