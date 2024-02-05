@@ -398,5 +398,6 @@ FodyWeavers.xsd
 *.sln.iml
 
 #Exclude compiled files and folders
-/DevAxCmmRtsLog/XppMetadata/DevAxCmmRtsLog
+/**/XppMetadata/
 /DevAxCmmRtsLog/*.*
+/DevAxCmmUtils/*.*

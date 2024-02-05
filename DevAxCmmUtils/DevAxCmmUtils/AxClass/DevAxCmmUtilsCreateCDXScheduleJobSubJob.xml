@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>DevAxCmmUtilsCreateCDXScheduleJobSubJob</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+internal final class DevAxCmmUtilsCreateCDXScheduleJobSubJob
+{
+    RetailConnSchedulerSubjobTable retailConnSchedulerSubjobTable;
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>main</Name>
+				<Source><![CDATA[
+    public static void main(Args _args)
+    {
+        RetailConnSchedulerSubjobTable retailConnSchedulerSubjobTable = _args.record();
+        if (retailConnSchedulerSubjobTable)
+        {
+            DevAxCmmUtilsCreateCDXScheduleJobSubJob createCDXScheduleJobSubJob = new DevAxCmmUtilsCreateCDXScheduleJobSubJob();
+            createCDXScheduleJobSubJob.setRetailConnSchedulerSubjobTable(_args.record());
+            createCDXScheduleJobSubJob.run();
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>setRetailConnSchedulerSubjobTable</Name>
+				<Source><![CDATA[
+    public void setRetailConnSchedulerSubjobTable(RetailConnSchedulerSubjobTable _retailConnSchedulerSubjobTable)
+    {
+        retailConnSchedulerSubjobTable = _retailConnSchedulerSubjobTable;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>run</Name>
+				<Source><![CDATA[
+    public void run()
+    {
+        if (this.canCreateJobAndDistributionSchedule())
+        {
+            name channelDatabaseName = this.createAndRunDialog();
+        
+            if (channelDatabaseName)
+            {
+                this.createRetailConnSchedule(channelDatabaseName);
+            }
+        }
+
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>canCreateJobAndDistributionSchedule</Name>
+				<Source><![CDATA[
+    protected boolean canCreateJobAndDistributionSchedule()
+    {
+        boolean ret = true;
+        
+        //Truncamos el nombre del subJob para que ingrese en el largo del jobId
+        RetailConnJobId retailConnJobId = retailConnSchedulerSubjobTable.name;
+
+        //Busco si existe un Job con ese jobId
+        RetailConnSchedulerJobTable retailConnSchedulerJobTable;
+        select firstonly retailConnSchedulerJobTable
+            where retailConnSchedulerJobTable.jobId == retailConnJobId;
+
+        if (retailConnSchedulerJobTable)
+        {
+            ret = checkFailed(strFmt("Already exists a job %1 for the subjobs %2"
+                , retailConnSchedulerJobTable.jobId, retailConnSchedulerSubjobTable.name));
+        }
+        
+        //Busco si existe un programa de distribución con ese subJob
+        RetailConnSchedule retailConnSchedule;
+        select firstonly retailConnSchedule
+                where retailConnSchedule.Name == retailConnSchedulerSubjobTable.name
+            ;
+        if (retailConnSchedule)
+        {
+            ret = checkFailed(strFmt("Already exists a distribution schedule %1 for the subjobs %1"
+                , retailConnSchedulerSubjobTable.name));
+        }
+
+        return ret;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>createRetailConnSchedule</Name>
+				<Source><![CDATA[
+    protected void createRetailConnSchedule(Name channelDatabaseName)
+    {
+        //Channel Database
+        RetailConnDatabaseProfile retailConnDatabaseProfile;
+        select firstonly retailConnDatabaseProfile
+                where retailConnDatabaseProfile.Name == channelDatabaseName
+        ;
+
+        //Truncamos el nombre del subJob para que ingrese en el largo del jobId
+        RetailConnJobId retailConnJobId = retailConnSchedulerSubjobTable.name;
+        
+        //Creo el job
+        RetailConnSchedulerJobTable retailConnSchedulerJobTable;
+        retailConnSchedulerJobTable.initValue();
+        retailConnSchedulerJobTable.jobId = retailConnJobId;
+        retailConnSchedulerJobTable.RetailConnChannelSchema = retailConnSchedulerSubjobTable.RetailConnChannelSchema;
+        retailConnSchedulerJobTable.insert();
+
+        //Linkeo el subJob al Job
+        RetailConnSchedulerJobLine retailConnSchedulerJobLine;
+        retailConnSchedulerJobLine.initValue();
+        retailConnSchedulerJobLine.jobId = retailConnSchedulerJobTable.jobId;
+        retailConnSchedulerJobLine.subJobId = retailConnSchedulerSubjobTable.subJobId;
+        retailConnSchedulerJobLine.insert();
+
+        //Creo el programa de distribución
+        RetailConnSchedule retailConnSchedule;
+        retailConnSchedule.initValue();
+        retailConnSchedule.Name = retailConnSchedulerSubjobTable.name;
+        retailConnSchedule.insert();
+
+        //Linkeo el programa de distribución con el ChannelDatabaseGroup
+        RetailCDXScheduleDataGroup retailCDXScheduleDataGroup;
+        retailCDXScheduleDataGroup.initValue();
+        retailCDXScheduleDataGroup.Schedule = retailConnSchedule.RecId;
+        retailCDXScheduleDataGroup.DataGroup = retailConnDatabaseProfile.DataGroup;
+        retailCDXScheduleDataGroup.insert();
+
+        //Linkeo el programa de distribución con el Job
+        RetailConnScheduleJobMapping retailConnScheduleJobMapping;
+        retailConnScheduleJobMapping.initValue();
+        retailConnScheduleJobMapping.ScheduleRecId = retailConnSchedule.RecId;
+        retailConnScheduleJobMapping.SchedulerJobId = retailConnSchedulerJobTable.jobId;
+        retailConnScheduleJobMapping.insert();
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>createAndRunDialog</Name>
+				<Source><![CDATA[
+    protected name createAndRunDialog()
+    {
+        Name channelDatabaseName;
+
+        Dialog dialog = new Dialog("Create distribution schedule job and sub job");
+        DialogField dfRetailConnDatabaseProfile = dialog.addField(extendedTypeStr(Name), "@RET606");
+        dfRetailConnDatabaseProfile.registerOverrideMethod(
+            methodStr(FormStringControl, lookup),
+            methodStr(DevAxCmmUtilsCreateCDXScheduleJobSubJob,lookupChannelDatabaseName ),
+            this);
+
+        if (dialog.run())
+        {
+            channelDatabaseName = dfRetailConnDatabaseProfile.value();
+        }
+
+        return channelDatabaseName;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>lookupChannelDatabaseName</Name>
+				<Source><![CDATA[
+    public void lookupChannelDatabaseName(FormStringControl _formControl)
+    {
+        SysTableLookup tableLookup = SysTableLookup::newParameters(tableNum(RetailConnDatabaseProfile), _formControl);
+        Query query = new Query();
+        QueryBuildDataSource qbdsRetailConnDatabaseProfile = query.addDataSource(tableNum(RetailConnDatabaseProfile));
+        QueryBuildDataSource qbdsRetailConnChannelSchema = qbdsRetailConnDatabaseProfile.addDataSource(tableNum(RetailConnChannelSchema));
+        qbdsRetailConnChannelSchema.relations(true);
+        QueryBuildRange qbr = qbdsRetailConnChannelSchema.addRange(fieldnum(RetailConnChannelSchema, RecId));
+        qbr.value(queryValue(this.retailConnSchedulerSubjobTable.RetailConnChannelSchema));
+
+        tableLookup.addLookupfield(fieldNum(RetailConnDatabaseProfile, Name), true);
+
+        tableLookup.parmQuery(query);
+        tableLookup.performFormLookup();
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>
