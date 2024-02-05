@@ -9,23 +9,7 @@
 [Form]
 public class DevAxCmmRtsLog extends FormRun
 {
-    DevAxCmmRtsLogMethods devAxCmmRtsLogMethodsTmp;
-
-
-
-
 }
-]]></Source>
-			</Method>
-			<Method>
-				<Name>init</Name>
-				<Source><![CDATA[
-    public void init()
-    {
-        devAxCmmRtsLogMethodsTmp = DevAxCmmRtsLogMethods::initInMemoryTableWithRtsMethods();
-        super();
-    }
-
 ]]></Source>
 			</Method>
 		</Methods>
@@ -421,6 +405,15 @@ public class DevAxCmmRtsLog extends FormRun
 																<FormControlExtension
 																	i:nil="true" />
 																<Controls>
+																	<AxFormControl xmlns=""
+																		i:type="AxFormMenuFunctionButtonControl">
+																		<Name>DevAxCmmRtsLogDialog</Name>
+																		<Type>MenuFunctionButton</Type>
+																		<FormControlExtension
+																			i:nil="true" />
+																		<MenuItemName>DevAxCmmRtsLogDialog</MenuItemName>
+																		<Text>Nuevos</Text>
+																	</AxFormControl>
 																	<AxFormControl xmlns=""
 																		i:type="AxFormCommandButtonControl">
 																		<Name>ParametersMethodsToLogAddCommand</Name>

@@ -116,6 +116,16 @@
       <Name>DevAxCmmRtsLog</Name>
       <Link>Forms\DevAxCmmRtsLog</Link>
     </Content>
+    <Content Include="AxForm\DevAxCmmRtsLogDialog">
+      <SubType>Content</SubType>
+      <Name>DevAxCmmRtsLogDialog</Name>
+      <Link>Forms\DevAxCmmRtsLogDialog</Link>
+    </Content>
+    <Content Include="AxMenuItemAction\DevAxCmmRtsLogFormDialog">
+      <SubType>Content</SubType>
+      <Name>DevAxCmmRtsLogFormDialog</Name>
+      <Link>Action Menu Items\DevAxCmmRtsLogFormDialog</Link>
+    </Content>
     <Content Include="AxMenuItemAction\DevAxCmmRtsLogServiceDeleteRecords">
       <SubType>Content</SubType>
       <Name>DevAxCmmRtsLogServiceDeleteRecords</Name>
@@ -135,6 +145,11 @@
       <SubType>Content</SubType>
       <Name>DevAxCmmRtsLog</Name>
       <Link>Display Menu Items\DevAxCmmRtsLog</Link>
+    </Content>
+    <Content Include="AxMenuItemDisplay\DevAxCmmRtsLogDialog">
+      <SubType>Content</SubType>
+      <Name>DevAxCmmRtsLogDialog</Name>
+      <Link>Display Menu Items\DevAxCmmRtsLogDialog</Link>
     </Content>
     <Content Include="AxSecurityPrivilege\DevAxCmmRtsLogTableEntityMaintain">
       <SubType>Content</SubType>
