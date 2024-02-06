@@ -13,17 +13,13 @@ $localPath = "K:\Axxon\GitHub.JonatanTorino\DevAxCmmUtils"
 $modelName = "DevAxCmmUtils"
 
 # Clone or pull the repository
-try {
-    if (Test-Path $localPath) {
-        Set-Location $localPath
-        git pull
-    }
-    else {
-        git clone $repositoryUrl $localPath | Wait-Process
-    }
+
+if (Test-Path $localPath) {
+    Set-Location $localPath
+    git pull
 }
-catch {
-    throw [System.Exception] $_.Exception.Message
+else {
+    git clone $repositoryUrl $localPath | Wait-Process
 }
 
 Write-Host -ForegroundColor Yellow "Deteniendo todos los servicios de D365FO"
