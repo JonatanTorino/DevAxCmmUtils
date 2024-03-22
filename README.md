@@ -38,7 +38,7 @@ New-Item -ItemType SymbolicLink -Path $linkPath -Target $targetPath
 
 # Task 3: Compile the model
 Write-Host -ForegroundColor Green "Executing the D365 module compile command: $modelName"
-Invoke-D365ModuleFullCompile -Module $modelName
+Invoke-D365ProcessModule -Module $modelName -ExecuteCompile -ExecuteSync
 
 Write-Host -ForegroundColor Yellow "Iniciando el servicio del AOS de D365FO"
 Start-D365Environment -Aos
