@@ -16,11 +16,10 @@ class DevAxCmmRtsLogServiceDeleteRecordContract implements SysOperationInitializ
 				<Name>parmRetentionDays</Name>
 				<Source><![CDATA[
     [DataMember,
-    SysOperationLabel(literalStr("Retention days")),
-    SysOperationHelpText(literalStr("Data older than the retention days will be cleaned up")),
+    SysOperationLabel(literalStr("Días para atrás hasta")),
+    SysOperationHelpText(literalStr("Se eliminan los registros anteriores al día hasta elegido")),
     SysOperationDisplayOrder('1')]
-
-public int parmRetentionDays(int _retentionDays = retentionDays)
+    public int parmRetentionDays(int _retentionDays = retentionDays)
     {
         retentionDays = _retentionDays;
 

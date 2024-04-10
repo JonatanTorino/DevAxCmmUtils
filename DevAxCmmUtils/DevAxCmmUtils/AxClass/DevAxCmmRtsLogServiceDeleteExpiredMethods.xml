@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>DevAxCmmRtsLogServiceDeleteExpiredMethods</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+class DevAxCmmRtsLogServiceDeleteExpiredMethods extends SysOperationServiceBase
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>process</Name>
+				<Source><![CDATA[
+    public void process()
+    {
+        date retentionDate = today();
+
+        this.deleteRecords(retentionDate);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>deleteRecords</Name>
+				<Source><![CDATA[
+    protected void deleteRecords(date toDateTime)
+    {
+        DevAxCmmRtsLogMethods devAxCmmRtsMethodsTableToClear;
+
+        ttsbegin;
+
+        delete_from devAxCmmRtsMethodsTableToClear
+            where devAxCmmRtsMethodsTableToClear.EndDate < toDateTime;
+
+        ttscommit;
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

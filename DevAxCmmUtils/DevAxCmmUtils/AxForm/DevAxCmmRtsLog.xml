@@ -113,7 +113,6 @@ public class DevAxCmmRtsLog extends FormRun
 				</AxFormDataSourceField>
 			</Fields>
 			<ReferencedDataSources />
-			<InsertIfEmpty>No</InsertIfEmpty>
 			<DataSourceLinks />
 			<DerivedDataSources />
 		</AxFormDataSource>
@@ -455,6 +454,19 @@ public class DevAxCmmRtsLog extends FormRun
 																		<MenuItemType>Action</MenuItemType>
 																		<MultiSelect>Yes</MultiSelect>
 																		<Text>Update log level</Text>
+																	</AxFormControl>
+																	<AxFormControl xmlns=""
+																		i:type="AxFormMenuFunctionButtonControl">
+																		<Name>DevAxCmmRtsLogServiceDeleteExpiredMethods</Name>
+																		<Type>MenuFunctionButton</Type>
+																		<FormControlExtension
+																			i:nil="true" />
+																		<AutoRefreshData>Yes</AutoRefreshData>
+																		<DataSource>DevAxCmmRtsLogMethods</DataSource>
+																		<MenuItemName>DevAxCmmRtsLogServiceDeleteExpiredMethods</MenuItemName>
+																		<MenuItemType>Action</MenuItemType>
+																		<MultiSelect>Yes</MultiSelect>
+																		<Text>Delete expired methods</Text>
 																	</AxFormControl>
 																</Controls>
 																<DataSource>DevAxCmmRtsLogMethods</DataSource>

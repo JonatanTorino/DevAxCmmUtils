@@ -11,13 +11,11 @@
     <GenerateCrossReferences>True</GenerateCrossReferences>
     <RunAppCheckerRules>False</RunAppCheckerRules>
     <LogAppcheckerDiagsAsErrors>False</LogAppcheckerDiagsAsErrors>
-    <ProjectGuid>{4ee37123-4724-4b0c-98f7-e482bd32f8b0}</ProjectGuid>
-    <Name>DevAxCmmUtils</Name>
+    <DeployOnline>False</DeployOnline>
+    <ProjectGuid>{f078fe05-d27d-48ad-86a6-a462aa606088}</ProjectGuid>
+    <Name>DevAxCmmRtsLog</Name>
     <RootNamespace>DevAxCmmRtsLog</RootNamespace>
-    <SccProjectName>SAK</SccProjectName>
-    <SccProvider>SAK</SccProvider>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccLocalPath>SAK</SccLocalPath>
+    <StartupType>Class</StartupType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <Configuration>Debug</Configuration>
@@ -40,7 +38,6 @@
     <Folder Include="Classes\" />
     <Folder Include="Data Entities\" />
     <Folder Include="Display Menu Items\" />
-    <Folder Include="EDT Enums\" />
     <Folder Include="Forms\" />
     <Folder Include="Security Privileges\" />
     <Folder Include="Tables\" />
@@ -55,6 +52,11 @@
       <SubType>Content</SubType>
       <Name>DevAxCmmRtsLogController</Name>
       <Link>Classes\DevAxCmmRtsLogController</Link>
+    </Content>
+    <Content Include="AxClass\DevAxCmmRtsLogServiceDeleteExpiredMethods">
+      <SubType>Content</SubType>
+      <Name>DevAxCmmRtsLogServiceDeleteExpiredMethods</Name>
+      <Link>Classes\DevAxCmmRtsLogServiceDeleteExpiredMethods</Link>
     </Content>
     <Content Include="AxClass\DevAxCmmRtsLogServiceDeleteRecordContract">
       <SubType>Content</SubType>
@@ -86,16 +88,6 @@
       <Name>DevAxCmmRtsLogUpdateDialogLogLevel</Name>
       <Link>Classes\DevAxCmmRtsLogUpdateDialogLogLevel</Link>
     </Content>
-    <Content Include="AxClass\InfoDevAx_Extension">
-      <SubType>Content</SubType>
-      <Name>InfoDevAx_Extension</Name>
-      <Link>Classes\InfoDevAx_Extension</Link>
-    </Content>
-    <Content Include="AxClass\RetailRealTimeServiceWrapperDevAxCmmLog_Extension">
-      <SubType>Content</SubType>
-      <Name>RetailRealTimeServiceWrapperDevAxCmmLog_Extension</Name>
-      <Link>Classes\RetailRealTimeServiceWrapperDevAxCmmLog_Extension</Link>
-    </Content>
     <Content Include="AxDataEntityView\DevAxCmmRtsLogTableEntity">
       <SubType>Content</SubType>
       <Name>DevAxCmmRtsLogTableEntity</Name>
@@ -125,6 +117,11 @@
       <SubType>Content</SubType>
       <Name>DevAxCmmRtsLogFormDialog</Name>
       <Link>Action Menu Items\DevAxCmmRtsLogFormDialog</Link>
+    </Content>
+    <Content Include="AxMenuItemAction\DevAxCmmRtsLogServiceDeleteExpiredMethods">
+      <SubType>Content</SubType>
+      <Name>DevAxCmmRtsLogServiceDeleteExpiredMethods</Name>
+      <Link>Action Menu Items\DevAxCmmRtsLogServiceDeleteExpiredMethods</Link>
     </Content>
     <Content Include="AxMenuItemAction\DevAxCmmRtsLogServiceDeleteRecords">
       <SubType>Content</SubType>
@@ -188,5 +185,5 @@
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.Common.targets" />
-  <Import Project="$(BuildTasksDirectory)\Microsoft.Dynamics.Framework.Tools.BuildTasks.targets" />
+  <Import Project="$(BuildTasksDirectory)\Microsoft.Dynamics.Framework.Tools.BuildTasks.17.0.targets" />
 </Project>

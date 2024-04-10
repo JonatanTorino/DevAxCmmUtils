@@ -17,10 +17,9 @@ class DevAxCmmRtsLogServiceDeleteRecords extends SysOperationServiceBase
         utcdatetime retentionDateTime;
         retentionDateTime = DateTimeUtil::addDays(DateTimeUtil::getSystemDateTime(), -retentionDays);
 
-        Info(strFmt("Retention days: %1", retentionDays));
-        Info(strFmt("Retention date/time: %1", retentionDateTime));
+        Info(strFmt("Días para atrás: %1", retentionDays));
+        Info(strFmt("Eliminar Logs hasta el: %1", retentionDateTime));
 
-        DevAxCmmRtsLogTable devAxCmmRtsLogTable;
         this.deleteRecords(retentionDateTime);
     }
 
@@ -34,18 +33,17 @@ class DevAxCmmRtsLogServiceDeleteRecords extends SysOperationServiceBase
         DevAxCmmRtsLogTable devAxCmmRtsLogTableToClear;
         DevAxCmmRtsLogInfolog devAxCmmRtsLogInfologToClear;
 
-
         ttsbegin;
+        devAxCmmRtsLogTableToClear.skipDeleteActions(true);
+
         delete_from devAxCmmRtsLogInfologToClear
                     exists join devAxCmmRtsLogTableToClear
                     where devAxCmmRtsLogTableToClear.CreatedDateTime <= toDateTime
                     && devAxCmmRtsLogTableToClear.RecId == devAxCmmRtsLogInfologToClear.DevAxCmmRtsLogTable
                     ;
 
-        devAxCmmRtsLogTableToClear.skipDeleteActions(true);
         delete_from devAxCmmRtsLogTableToClear
-                    where devAxCmmRtsLogTableToClear.CreatedDateTime <= toDateTime
-                ;
+            where devAxCmmRtsLogTableToClear.CreatedDateTime <= toDateTime;
         ttscommit;
     }
 
