@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
-	<Name>InfoDevAx_Extension</Name>
+	<Name>InfoDevAxCmmRtsLog_Extension</Name>
 	<SourceCode>
 		<Declaration><![CDATA[
 [ExtensionOf(classstr(Info))]
-final class InfoDevAx_Extension
+final class InfoDevAxCmmRtsLog_Extension
 {
 }
+
 ]]></Declaration>
 		<Methods>
 			<Method>
