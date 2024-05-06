@@ -88,6 +88,11 @@
       <Name>DevAxCmmRtsLogUpdateDialogLogLevel</Name>
       <Link>Classes\DevAxCmmRtsLogUpdateDialogLogLevel</Link>
     </Content>
+    <Content Include="AxClass\InfoDevAxCmmRtsLog_Extension">
+      <SubType>Content</SubType>
+      <Name>InfoDevAxCmmRtsLog_Extension</Name>
+      <Link>Classes\InfoDevAxCmmRtsLog_Extension</Link>
+    </Content>
     <Content Include="AxDataEntityView\DevAxCmmRtsLogTableEntity">
       <SubType>Content</SubType>
       <Name>DevAxCmmRtsLogTableEntity</Name>
