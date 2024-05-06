@@ -110,8 +110,15 @@ public class DevAxCmmRtsLogController
 
             //Output params
             devAxCmmRtsLogTable.Infologs = _response.Message();
-            devAxCmmRtsLogTable.ResponseParams = FormJsonSerializer::serializeClass(_response);
-            devAxCmmRtsLogTable.Success = _response.Success();
+            devAxCmmRtsogTable.Success = _response.Success();
+            try
+            {
+                devAxCmmRtsLogTable.ResponseParams = FormJsonSerializer::serializeClass(_response);
+            }
+            catch
+            {
+                devAxCmmRtsLogTable.ResponseParams = RetailTransactionServiceUtilities::getInfologMessages(fromLineLocal);
+            }
 
             devAxCmmRtsLogTable.ElapsedMilliseconds = _contract.getElapsedMilliseconds();
             devAxCmmRtsLogTable.insert();
