@@ -110,7 +110,7 @@ public class DevAxCmmRtsLogController
 
             //Output params
             devAxCmmRtsLogTable.Infologs = _response.Message();
-            devAxCmmRtsogTable.Success = _response.Success();
+            devAxCmmRtsLogTable.Success = _response.Success();
             try
             {
                 devAxCmmRtsLogTable.ResponseParams = FormJsonSerializer::serializeClass(_response);
