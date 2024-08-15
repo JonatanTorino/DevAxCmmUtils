@@ -9,25 +9,21 @@ Copy and past
 ```powershell
 # Task 1: Clone the repository
 $repositoryUrl = "https://github.com/JonatanTorino/DevAxCmmUtils"
-$localPath = "K:\Axxon\GitHub.JonatanTorino\DevAxCmmUtils"
+$localRepoPath = "K:\Axxon\GitHub.JonatanTorino\DevAxCmmUtils"
 $modelName = "DevAxCmmUtils"
 
 # Clone or pull the repository
-
-if (Test-Path $localPath) {
-    Set-Location $localPath
-    git pull
-}
-else {
-    git clone $repositoryUrl $localPath | Wait-Process
-}
+git clone $repositoryUrl $localRepoPath | Wait-Process
+# En caso que existiera previamente la carpeta, por las dudas ejecuto un pull
+Set-Location $localRepoPath
+git pull
 
 Write-Host -ForegroundColor Yellow "Deteniendo todos los servicios de D365FO"
 Stop-D365Environment
 
 # Task 2: Create a symbolic link
 $packagesLocalDirectory = "K:\AosService\PackagesLocalDirectory"
-$targetPath = Join-Path $localPath -ChildPath $modelName
+$targetPath = Join-Path $localRepoPath -ChildPath $modelName
 $linkPath = Join-Path $packagesLocalDirectory -ChildPath $modelName
 
 Write-Host -ForegroundColor Cyan "Remove existing directory if it exists $linkPath"
