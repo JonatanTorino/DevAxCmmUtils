@@ -655,6 +655,16 @@ public class DevAxCmmRtsLog extends FormRun
 																			i:nil="true" />
 																		<Command>DeleteRecord</Command>
 																	</AxFormControl>
+																	<AxFormControl xmlns=""
+																		i:type="AxFormMenuFunctionButtonControl">
+																		<Name>DevAxCmmRtsLogCleanupUnwanted</Name>
+																		<Type>MenuFunctionButton</Type>
+																		<FormControlExtension
+																			i:nil="true" />
+																		<AutoRefreshData>Yes</AutoRefreshData>
+																		<MenuItemName>DevAxCmmRtsLogCleanupUnwanted</MenuItemName>
+																		<MenuItemType>Action</MenuItemType>
+																	</AxFormControl>
 																</Controls>
 																<DataSource>DevAxCmmRtsLogTable</DataSource>
 															</AxFormControl>

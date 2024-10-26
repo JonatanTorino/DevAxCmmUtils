@@ -35,6 +35,7 @@
     <Folder Include="Action Menu Items\" />
     <Folder Include="Classes\" />
     <Folder Include="Form Extensions\" />
+    <Folder Include="Forms\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AxClass\DevAxCmmUtilsCreateCDXScheduleJobSubJob">
@@ -46,6 +47,16 @@
       <SubType>Content</SubType>
       <Name>RetailConnSchedulerSubJobTable.DevAxCmmUtils</Name>
       <Link>Form Extensions\RetailConnSchedulerSubJobTable.DevAxCmmUtils</Link>
+    </Content>
+    <Content Include="AxForm\DevAxCmmRtsLog">
+      <SubType>Content</SubType>
+      <Name>DevAxCmmRtsLog</Name>
+      <Link>Forms\DevAxCmmRtsLog</Link>
+    </Content>
+    <Content Include="AxMenuItemAction\DevAxCmmRtsLogCleanupUnwanted">
+      <SubType>Content</SubType>
+      <Name>DevAxCmmRtsLogCleanupUnwanted</Name>
+      <Link>Action Menu Items\DevAxCmmRtsLogCleanupUnwanted</Link>
     </Content>
     <Content Include="AxMenuItemAction\DevAxCmmUtilsCreateCDXScheduleJobSubJob">
       <SubType>Content</SubType>
