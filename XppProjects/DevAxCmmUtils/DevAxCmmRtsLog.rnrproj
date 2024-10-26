@@ -43,6 +43,11 @@
     <Folder Include="Tables\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AxClass\DevAxCmmRtsLogCleanupUnwanted">
+      <SubType>Content</SubType>
+      <Name>DevAxCmmRtsLogCleanupUnwanted</Name>
+      <Link>Classes\DevAxCmmRtsLogCleanupUnwanted</Link>
+    </Content>
     <Content Include="AxClass\DevAxCmmRtsLogContract">
       <SubType>Content</SubType>
       <Name>DevAxCmmRtsLogContract</Name>
@@ -117,6 +122,11 @@
       <SubType>Content</SubType>
       <Name>DevAxCmmRtsLogDialog</Name>
       <Link>Forms\DevAxCmmRtsLogDialog</Link>
+    </Content>
+    <Content Include="AxMenuItemAction\DevAxCmmRtsLogCleanupUnwanted">
+      <SubType>Content</SubType>
+      <Name>DevAxCmmRtsLogCleanupUnwanted</Name>
+      <Link>Action Menu Items\DevAxCmmRtsLogCleanupUnwanted</Link>
     </Content>
     <Content Include="AxMenuItemAction\DevAxCmmRtsLogFormDialog">
       <SubType>Content</SubType>

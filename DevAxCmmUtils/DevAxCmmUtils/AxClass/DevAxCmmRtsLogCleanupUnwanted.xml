@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>DevAxCmmRtsLogCleanupUnwanted</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+public class DevAxCmmRtsLogCleanupUnwanted
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>main</Name>
+				<Source><![CDATA[
+    public static void main(Args _args)
+    {
+        DevAxCmmRtsLogTable logTable = _args.record();
+        DevAxCmmRtsLogCleanupUnwanted::cleanupLogTable(logTable);
+        DevAxCmmRtsLogCleanupUnwanted::updateLogMethods(logTable);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>cleanupLogTable</Name>
+				<Source><![CDATA[
+    public static void cleanupLogTable(DevAxCmmRtsLogTable _logTable)
+    {
+        DevAxCmmRtsLogTable logTableCleanup;
+
+        delete_from logTableCleanup
+            where logTableCleanup.ClassName == _logTable.ClassName
+            && logTableCleanup.MethodName == _logTable.MethodName
+        ;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>updateLogMethods</Name>
+				<Source><![CDATA[
+    public static void updateLogMethods(DevAxCmmRtsLogTable _logTable)
+    {
+        DevAxCmmRtsLogMethods logMethods;
+
+        update_recordset logMethods
+            setting LogLevel = DevAxCmmRtsLogLevel::None
+            where logMethods.ClassName == _logTable.ClassName
+            && logMethods.MethodName == _logTable.MethodName
+        ;
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>
