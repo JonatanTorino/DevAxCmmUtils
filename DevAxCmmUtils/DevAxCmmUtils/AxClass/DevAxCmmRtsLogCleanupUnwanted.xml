@@ -13,9 +13,18 @@ public class DevAxCmmRtsLogCleanupUnwanted
 				<Source><![CDATA[
     public static void main(Args _args)
     {
+        Dialog           dialog = new Dialog('Select Log Level');
+
+        DialogField dialogLogLevel = dialog.addField(enumStr(DevAxCmmRtsLogLevel), 'Log Level');
+        dialogLogLevel.value(DevAxCmmRtsLogLevel::None);
+
         DevAxCmmRtsLogTable logTable = _args.record();
-        DevAxCmmRtsLogCleanupUnwanted::cleanupLogTable(logTable);
-        DevAxCmmRtsLogCleanupUnwanted::updateLogMethods(logTable);
+        if (dialog.run())
+        {
+            DevAxCmmRtsLogCleanupUnwanted::cleanupLogTable(logTable);
+            DevAxCmmRtsLogCleanupUnwanted::updateLogMethods(logTable, dialogLogLevel.value());
+        }
+        
     }
 
 ]]></Source>
@@ -38,12 +47,12 @@ public class DevAxCmmRtsLogCleanupUnwanted
 			<Method>
 				<Name>updateLogMethods</Name>
 				<Source><![CDATA[
-    public static void updateLogMethods(DevAxCmmRtsLogTable _logTable)
+    public static void updateLogMethods(DevAxCmmRtsLogTable _logTable, DevAxCmmRtsLogLevel _logLevel)
     {
         DevAxCmmRtsLogMethods logMethods;
 
         update_recordset logMethods
-            setting LogLevel = DevAxCmmRtsLogLevel::None
+            setting LogLevel = _logLevel
             where logMethods.ClassName == _logTable.ClassName
             && logMethods.MethodName == _logTable.MethodName
         ;
