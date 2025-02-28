@@ -36,6 +36,8 @@
     <Folder Include="Classes\" />
     <Folder Include="Form Extensions\" />
     <Folder Include="Forms\" />
+    <Folder Include="Menu Extensions\" />
+    <Folder Include="Security Privileges\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AxClass\DevAxCmmUtilsCreateCDXScheduleJobSubJob">
@@ -53,6 +55,11 @@
       <Name>DevAxCmmRtsLog</Name>
       <Link>Forms\DevAxCmmRtsLog</Link>
     </Content>
+    <Content Include="AxMenuExtension\RetailMain.DevAxCmmUtils">
+      <SubType>Content</SubType>
+      <Name>RetailMain.DevAxCmmUtils</Name>
+      <Link>Menu Extensions\RetailMain.DevAxCmmUtils</Link>
+    </Content>
     <Content Include="AxMenuItemAction\DevAxCmmRtsLogCleanupUnwanted">
       <SubType>Content</SubType>
       <Name>DevAxCmmRtsLogCleanupUnwanted</Name>
@@ -62,6 +69,16 @@
       <SubType>Content</SubType>
       <Name>DevAxCmmUtilsCreateCDXScheduleJobSubJob</Name>
       <Link>Action Menu Items\DevAxCmmUtilsCreateCDXScheduleJobSubJob</Link>
+    </Content>
+    <Content Include="AxSecurityPrivilege\DevAxCmmRtsLogMaintain">
+      <SubType>Content</SubType>
+      <Name>DevAxCmmRtsLogMaintain</Name>
+      <Link>Security Privileges\DevAxCmmRtsLogMaintain</Link>
+    </Content>
+    <Content Include="AxSecurityPrivilege\DevAxCmmRtsLogView">
+      <SubType>Content</SubType>
+      <Name>DevAxCmmRtsLogView</Name>
+      <Link>Security Privileges\DevAxCmmRtsLogView</Link>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.Common.targets" />

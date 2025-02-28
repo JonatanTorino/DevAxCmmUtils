@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxMenuExtension xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="Microsoft.Dynamics.AX.Metadata.V1">
+	<Name>RetailMain.DevAxCmmUtils</Name>
+	<Customizations />
+	<Elements>
+		<AxMenuExtensionElement xmlns="">
+			<MenuElement xmlns=""
+				i:type="AxMenuElementSubMenu">
+				<Name>Periodic</Name>
+				<MenuItemName>DevAxCmmRtsLog</MenuItemName>
+				<Elements>
+					<AxMenuElement xmlns=""
+						i:type="AxMenuElementMenuItem">
+						<Name>DevAxCmmRtsLog</Name>
+						<MenuItemName>DevAxCmmRtsLog</MenuItemName>
+					</AxMenuElement>
+				</Elements>
+			</MenuElement>
+		</AxMenuExtensionElement>
+	</Elements>
+	<MenuElementModifications />
+	<PropertyModifications />
+</AxMenuExtension>
