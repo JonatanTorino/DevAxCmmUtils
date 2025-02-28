@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxSecurityPrivilege xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>DevAxCmmRtsLogView</Name>
+	<DataEntityPermissions />
+	<DirectAccessPermissions />
+	<EntryPoints>
+		<AxSecurityEntryPointReference>
+			<Name>DevAxCmmRtsLog</Name>
+			<Grant>
+				<Read>Allow</Read>
+			</Grant>
+			<ObjectName>DevAxCmmRtsLog</ObjectName>
+			<ObjectType>MenuItemDisplay</ObjectType>
+			<Forms>
+				<AxSecurityEntryPointReferenceForm>
+					<Name>DevAxCmmRtsLog</Name>
+					<Controls />
+					<DataSources />
+				</AxSecurityEntryPointReferenceForm>
+			</Forms>
+		</AxSecurityEntryPointReference>
+	</EntryPoints>
+	<FormControlOverrides />
+</AxSecurityPrivilege>
