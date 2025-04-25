@@ -13,8 +13,6 @@ public class DevAxCmmRtsLogTable extends common
 		<Read>Allow</Read>
 	</SubscriberAccessLevel>
 	<CreatedDateTime>Yes</CreatedDateTime>
-	<PrimaryIndex>RecIdx</PrimaryIndex>
-	<ReplacementKey>RecIdx</ReplacementKey>
 	<SaveDataPerCompany>No</SaveDataPerCompany>
 	<DeleteActions>
 		<AxTableDeleteAction>
@@ -36,11 +34,7 @@ public class DevAxCmmRtsLogTable extends common
 		<AxTableFieldGroup>
 			<Name>AutoIdentification</Name>
 			<AutoPopulate>Yes</AutoPopulate>
-			<Fields>
-				<AxTableFieldGroupField>
-					<DataField>RecId</DataField>
-				</AxTableFieldGroupField>
-			</Fields>
+			<Fields />
 		</AxTableFieldGroup>
 		<AxTableFieldGroup>
 			<Name>AutoSummary</Name>
@@ -94,17 +88,7 @@ public class DevAxCmmRtsLogTable extends common
 		</AxTableField>
 	</Fields>
 	<FullTextIndexes />
-	<Indexes>
-		<AxTableIndex>
-			<Name>RecIdx</Name>
-			<AlternateKey>Yes</AlternateKey>
-			<Fields>
-				<AxTableIndexField>
-					<DataField>RecId</DataField>
-				</AxTableIndexField>
-			</Fields>
-		</AxTableIndex>
-	</Indexes>
+	<Indexes />
 	<Mappings />
 	<Relations />
 	<StateMachines />
