@@ -36,10 +36,8 @@
     <Folder Include="Action Menu Items\" />
     <Folder Include="Base Enums\" />
     <Folder Include="Classes\" />
-    <Folder Include="Data Entities\" />
     <Folder Include="Display Menu Items\" />
     <Folder Include="Forms\" />
-    <Folder Include="Security Privileges\" />
     <Folder Include="Tables\" />
   </ItemGroup>
   <ItemGroup>
@@ -97,11 +95,6 @@
       <SubType>Content</SubType>
       <Name>InfoDevAxCmmRtsLog_Extension</Name>
       <Link>Classes\InfoDevAxCmmRtsLog_Extension</Link>
-    </Content>
-    <Content Include="AxDataEntityView\DevAxCmmRtsLogTableEntity">
-      <SubType>Content</SubType>
-      <Name>DevAxCmmRtsLogTableEntity</Name>
-      <Link>Data Entities\DevAxCmmRtsLogTableEntity</Link>
     </Content>
     <Content Include="AxEnum\DevAxCmmRtsLogLevel">
       <SubType>Content</SubType>
@@ -163,16 +156,6 @@
       <Name>DevAxCmmRtsLogDialog</Name>
       <Link>Display Menu Items\DevAxCmmRtsLogDialog</Link>
     </Content>
-    <Content Include="AxSecurityPrivilege\DevAxCmmRtsLogTableEntityMaintain">
-      <SubType>Content</SubType>
-      <Name>DevAxCmmRtsLogTableEntityMaintain</Name>
-      <Link>Security Privileges\DevAxCmmRtsLogTableEntityMaintain</Link>
-    </Content>
-    <Content Include="AxSecurityPrivilege\DevAxCmmRtsLogTableEntityView">
-      <SubType>Content</SubType>
-      <Name>DevAxCmmRtsLogTableEntityView</Name>
-      <Link>Security Privileges\DevAxCmmRtsLogTableEntityView</Link>
-    </Content>
     <Content Include="AxTable\DevAxCmmRtsLogInfolog">
       <SubType>Content</SubType>
       <Name>DevAxCmmRtsLogInfolog</Name>
@@ -192,11 +175,6 @@
       <SubType>Content</SubType>
       <Name>DevAxCmmRtsLogTable</Name>
       <Link>Tables\DevAxCmmRtsLogTable</Link>
-    </Content>
-    <Content Include="AxTable\DevAxCmmRtsLogTableStaging">
-      <SubType>Content</SubType>
-      <Name>DevAxCmmRtsLogTableStaging</Name>
-      <Link>Tables\DevAxCmmRtsLogTableStaging</Link>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.Common.targets" />
